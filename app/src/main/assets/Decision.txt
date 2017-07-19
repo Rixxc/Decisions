@@ -1,0 +1,45 @@
+START
+1:Du erwachst als Beifahrer eines Geländejeeps. Neben dir sitzt ein Mitte 30-jähriger, großer Mann, verhüllt von einer Maske.
+BUTTON Fragen,umsehen,warten
+CONTINUE 2,3,4
+BREAK
+2:Wo... bin ich? was mache ich hier?
+Wir sind gleich in der Stadt. Eine Stunde noch. Token sagte ja du bist besonders, aber ich wusste nicht dass er das damit meinte.
+SAVE Test
+BUTTON umsehen,warten
+CONTINUE 3,4
+3:REQUEST Test,4
+Durch die stark verdreckte Scheibe des Wagens erkennst du eine staubige Einöde. In weiter Entfernung stehen vereinzelt kleine Felsenketten aus dem Meer aus Sand hervor. Durch einen Blick durch die Hinterscheibe erkennst du eine mit Plane verdeckte Ladefläche.
+BUTTON Fragen,warten
+CONTINUE 2,4
+BREAK
+4: Nach etwa einer Viertel Stunde wird der Wagen langsamer. Der vermummte Fahrer wendet sich zu dir. "Wir sind gleich in der Stadt. Wir müssen unbemerkt durch die Kontrolle kommen und vor allem sollte dich hier niemand sehen." Das Auto ist nun völlig zum stehen gekommen."Versteckt euch gut,sodass euch keiner sieht."
+BUTTON Rücksitze,Ladefläche
+CONTINUE 5,6
+5: Nachdem der Fahrer dich mit einer Decke verdeckt,fährt er wieder los. Nach kurzer Zeit Hörst du Stimmen.
+BUTTON hervorschauen,warten
+CONTINUE 7,8
+6: Als du aussteigst findest du dich auf einer großen, sandigen Ebene wieder.Als du genauer hinschaust erkennst du die Umrisse einer großen Stadt. "Los,wir haben nicht viel Zeit." Als du um den Wagen herumgehst um zur Ladefläche zu kommen, siehst du wie der Fahrer die Plane herunternimmt. Du blickst auf eine Ansammlung von Schusswaffen und Munition. Einiges davon erscheint sehr notdürftig zusammengebaut.
+BUTTON Fragen,nichts anmerken lassen,
+CONTINUE 9,10
+BREAK
+9: "Waffen? Wofür sind die? Damit kann man ja eine Kleinstadt zerlegen!" Das ist der Nachschub natürlich. Was denkst du was wir hier machen? Wir sollten uns beeilen, die anderen warten sicher schon. 
+BUTTON WEITER 3
+10: Nachdem der Fahrer einige der Waffe zur Seite geräumt ist, legst du dich auf die Fläche. "Ok.Gib keinen Mucks von dir. Ich sage dir Bescheid sobald alles vorbei ist."
+
+BUTTON hervorschauen,warten
+CONTINUE 7,8
+BREAK
+7: Als du unter der Decke hervorschaust, siehst du Die Silhouette eines großen Stadttores. Ungefähr ein Dutzend Personen stehen dort herum, unterhalten sich und scheinen zu warten. Du bemerkst die steigende Anpannung des Fahrers.
+BUTTON WEITER 8
+8:Der Jeep wird langsamer.Die Bremsen ächtzen bis er endlich zum stehen kommt. Du hörst die Schritte einer Person im Sand auf euch zukommen.
+BUTTON hervorschauen,warten
+CONTINUE 11,12
+BREAK
+11:Als du unter der Decke hervorschaust, erkennst du eine in Rüstung und atemmaske gekleidete Person. Sie gibt dem Fahrer seine Papiere wodurch kurz an seinem Unterarm eine Tattowierung sichtbar wird, die die Umrisse eines Wolfes zeigt.
+12:Leise hörst die Worte "Die Wölfe jagen im Rudel" Bevor sich der Wagen langsam in Bewegung setzt.
+BUTTON WEITER 13
+13: Du hörst reges treiben. Als du nachschaust siehst du Leute vor einem der dicht aneinander gereihten Häuser eine leuchtende Reklame mit der Aufschrift: "Berkinos Bar". Vermummte Gestalten unterhalten sich im Dunkel der Gassen. Wachen mit schusswaffen patroullieren durch die geschotterten Straßen der Stadt. Die Spitze eines großen Gebäudes kannst du in einiger Entfernung erkennen. Auf ihr steht ein Schild mit der Aufschrift "Trust industries". Der Wagen biegt in eine nebenstraße ab und fährt auf eine Lagerhalle zu, die sofort ihr Tor öffnet.
+
+
+
