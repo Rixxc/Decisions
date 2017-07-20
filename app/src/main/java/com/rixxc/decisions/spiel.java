@@ -257,7 +257,7 @@ public class spiel extends AppCompatActivity {
     }
     @Override
     public void onResume(){
-        if(!mediaPlayer.isPlaying()){
+        if(!mediaPlayer.isPlaying() && SETTINGS.getBoolean("Musik", true)){
             mediaPlayer.start();
         }
         super.onResume();

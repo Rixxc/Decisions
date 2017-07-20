@@ -1,11 +1,14 @@
 package com.rixxc.decisions;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
 import java.io.File;
@@ -14,8 +17,10 @@ import java.io.FileFilter;
 public class Einstellungen extends AppCompatActivity {
 
     private SharedPreferences settings;
+    private MediaPlayer mediaPlayer = MainActivity.mediaPlayer;
     private SharedPreferences.Editor editsettings;
-    private ToggleButton toggle;
+    private Switch toggle;
+    private Switch music;
     private Spinner spinner;
     private File obb;
     private File[] Files;
@@ -28,7 +33,8 @@ public class Einstellungen extends AppCompatActivity {
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();
 
-        toggle = (ToggleButton) findViewById(R.id.LandscapeMode);
+        toggle = (Switch) findViewById(R.id.LandscapeMode);
+        music = (Switch) findViewById(R.id.music);
 
         if(settings.getString("Orientierung", "portrait").equals("portrait")){
             toggle.setChecked(false);
@@ -39,11 +45,37 @@ public class Einstellungen extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     editsettings.putString("Orientierung", "landscape");
-                    editsettings.commit();
                 } else {
                     editsettings.putString("Orientierung", "portrait");
-                    editsettings.commit();
                 }
+                editsettings.commit();
+            }
+        });
+
+        if(settings.getBoolean("Musik", true)){
+            music.setChecked(true);
+        }else{
+            music.setChecked(false);
+        }
+        music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editsettings.putBoolean("Musik", true);
+                    try {
+                        AssetFileDescriptor assetFileDescriptor = getAssets().openFd("mysteriös.mp3");
+
+                        mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor());
+                        mediaPlayer.prepare();
+                        mediaPlayer.setLooping(true);
+                        mediaPlayer.start();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    editsettings.putBoolean("Musik", false);
+                    mediaPlayer.stop();
+                }
+                editsettings.commit();
             }
         });
 
@@ -83,11 +115,17 @@ public class Einstellungen extends AppCompatActivity {
         }
 
         spinner.setSelection(Auswahl);
+
+        if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){
+            mediaPlayer.start();
+        }
     }
     @Override
-    public void onBackPressed(){
+    public void onPause() {
         editsettings.putString("Abenteuer", spinner.getSelectedItem().toString());
         editsettings.commit();
-        super.onBackPressed();
+        mediaPlayer.pause();
+
+        super.onPause();
     }
 }

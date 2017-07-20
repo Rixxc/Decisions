@@ -92,20 +92,22 @@ public class MainActivity extends AppCompatActivity {
             downloaden();
         }
         */
-        try {
-            AssetFileDescriptor assetFileDescriptor = getAssets().openFd("mysteriös.mp3");
+        if(settings.getBoolean("Musik", true)) {
+            try {
+                AssetFileDescriptor assetFileDescriptor = getAssets().openFd("mysteriös.mp3");
 
-            mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor());
-            mediaPlayer.prepare();
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
-        }catch (Exception e){
-            e.printStackTrace();
+                mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor());
+                mediaPlayer.prepare();
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
     @Override
     public void onResume(){
-        if(!mediaPlayer.isPlaying()){
+        if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){
             mediaPlayer.start();
         }
         super.onResume();
