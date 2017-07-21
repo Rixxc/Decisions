@@ -7,6 +7,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private GestureDetector gestureScanner;
     private int debug = 1;
     private Thread playMusic;
+    private boolean pressedOnece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         neu = (Button) findViewById(R.id.neuesSpiel);
         history = (Button) findViewById(R.id.history);
         mViewGroupe = (ViewGroup) findViewById(R.id.activity_main);
+        pressedOnece =false;
+        neu.setText("Neues Spiel");
 
         //Initialisiere settings
         settings = getSharedPreferences("settings", MODE_PRIVATE);
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){
             mediaPlayer.start();
         }
+        neu.setText("Neues Spiel");
         super.onResume();
     }
     @Override
@@ -149,7 +154,21 @@ public class MainActivity extends AppCompatActivity {
             starten(false);
         }
         if(v.getId() == R.id.neuesSpiel){
-            starten(true);
+            if(!pressedOnece){
+                Toast.makeText(this, "Überschreibt alle Fortschritte zu diesem Abenteuer", Toast.LENGTH_LONG).show();
+                neu.setText("erneut drücken");
+                pressedOnece = true;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pressedOnece = false;
+                        neu.setText("Neues Spiel");
+                    }
+                }, 3000);
+            }else {
+                starten(true);
+            }
         }
         if(v.getId() == R.id.settings){
             Intent settings = new Intent(MainActivity.this, Einstellungen.class);
