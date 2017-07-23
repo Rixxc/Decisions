@@ -1,6 +1,5 @@
 package com.rixxc.decisions;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -10,9 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import java.io.File;
 import java.io.FileFilter;
 
@@ -31,7 +27,6 @@ public class Einstellungen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_einstellungen);
-        final Context test = getApplicationContext();
 
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();

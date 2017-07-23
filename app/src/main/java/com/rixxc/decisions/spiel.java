@@ -97,31 +97,30 @@ public class spiel extends AppCompatActivity {
                         upX = (int) event.getX();
                         upY = (int) event.getY();
                         Log.i("event.getX()", " upX " + downX);
-                        if (upX - downX > 100 && upY - downY < 50 && upY - downY > -50) {
+                        Log.e("upX-downX",upX - downX + "");
+                        Log.e("downX-upX",downX - upX + "");
+                        Log.e("upY-downY",upY - downY + "");
+                        Log.e("downY-upY",downY - upY + "");
+                        if(upX - downX > 200 && upY - downY < 100 && upY - downY > -100) {
                             // swipe right
-                            Toast.makeText(spiel.this, "Right", Toast.LENGTH_SHORT).show();
-                            Log.d("Log", eingabe2.getX() + "");
-                            eingabe1.animate()
-                                    .alpha(0f)
-                                    .rotation(90)
-                                    .x(1000)
-                                    .setDuration(1000)
-                                    .setListener(new AnimatorListenerAdapter() {
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            eingabe2.setX(0);
-                                            eingabe2.setAlpha(0f);
-                                            eingabe2.animate()
-                                                    .alpha(1f)
-                                                    .rotation(360)
-                                                    .x(100);
-                                        }
-                                    });
+                            if (weiter1 != -1){
+                                eip = weiter1;
+                                gebeDialog(eip);
+                            }
                         }
-
-                        else if (downX - upX > -100 && upY - downY < 50 && upY - downY > -50) {
+                        else if(downX - upX > 200 && upY - downY < 100 && upY - downY > -100) {
                             // swipe left
-                            Toast.makeText(spiel.this, "Left", Toast.LENGTH_SHORT).show();
+                            if (weiter3 != -1){
+                                eip = weiter3;
+                                gebeDialog(eip);
+                            }
+                        }
+                        else if(downY - upY > 200 && Math.abs(upX - downX) < 100 ){
+                            //swipe up
+                            if (weiter2 != -1){
+                                eip = weiter2;
+                                gebeDialog(eip);
+                            }
                         }
                         return true;
 
@@ -165,14 +164,26 @@ public class spiel extends AppCompatActivity {
                         upX = (int) event.getX();
                         upY = (int) event.getY();
                         Log.i("event.getX()", " upX " + downX);
-                        if (upX - downX > 100 && upY - downY < 50 && upY - downY > -50) {
+                        if(upX - downX > 200 && upY - downY < 100 && upY - downY > -100) {
                             // swipe right
-                            Toast.makeText(spiel.this, "Right", Toast.LENGTH_SHORT).show();
+                            if (weiter1 != -1){
+                                eip = weiter1;
+                                gebeDialog(eip);
+                            }
                         }
-
-                        else if (downX - upX > -100 && upY - downY < 50 && upY - downY > -50) {
+                        else if(downX - upX > 200 && upY - downY < 100 && upY - downY > -100) {
                             // swipe left
-                            Toast.makeText(spiel.this, "Left", Toast.LENGTH_SHORT).show();
+                            if (weiter3 != -1){
+                                eip = weiter3;
+                                gebeDialog(eip);
+                            }
+                        }
+                        else if(downY - upY > 200 && Math.abs(upX - downX) < 100 ){
+                            //swipe up
+                            if (weiter2 != -1){
+                                eip = weiter2;
+                                gebeDialog(eip);
+                            }
                         }
                         return true;
 
@@ -376,6 +387,7 @@ public class spiel extends AppCompatActivity {
             if(text.startsWith("WEITER")){
                 eingabe1.setVisibility(Button.INVISIBLE);
                 eingabe3.setVisibility(Button.INVISIBLE);
+                eingabe2.setVisibility(Button.VISIBLE);
                 eingabe2.setText("Weiter");
                 text = text.substring(7);
                 weiter1 = -1;
@@ -398,12 +410,12 @@ public class spiel extends AppCompatActivity {
             String[] SWeiter = text.split(",");
             if (Buttons.length == 2){
                 eingabe1.setText(Buttons[0]);
-                eingabe2.setText(Buttons[1]);
-                eingabe3.setVisibility(Button.INVISIBLE);
-                weiter3 = -1;
+                eingabe2.setVisibility(Button.INVISIBLE);
+                eingabe3.setText(Buttons[1]);
+                weiter2 = -1;
                 try{
                     weiter1 = Integer.parseInt(SWeiter[0]);
-                    weiter2 = Integer.parseInt(SWeiter[1]);
+                    weiter3 = Integer.parseInt(SWeiter[1]);
                 }catch (Exception e){
                     Log.e("IntPars", e + "");
                     Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
