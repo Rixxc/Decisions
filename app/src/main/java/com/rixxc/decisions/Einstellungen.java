@@ -68,6 +68,7 @@ public class Einstellungen extends AppCompatActivity {
                         AssetFileDescriptor assetFileDescriptor = getAssets().openFd("mysteriös.mp3");
 
                         mediaPlayer = new MediaPlayer();
+                        MainActivity.mediaPlayer = mediaPlayer;
 
                         mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor());
                         mediaPlayer.prepare();
