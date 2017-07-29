@@ -28,6 +28,8 @@ public class Einstellungen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_einstellungen);
 
+        setTitle("Einstellungen");
+
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();
 
