@@ -39,7 +39,14 @@ BREAK
 11:Als du unter der Decke hervorschaust, erkennst du eine in Rüstung und atemmaske gekleidete Person. Sie gibt dem Fahrer seine Papiere wodurch kurz an seinem Unterarm eine Tattowierung sichtbar wird, die die Umrisse eines Wolfes zeigt.
 12:Leise hörst die Worte "Die Wölfe jagen im Rudel" Bevor sich der Wagen langsam in Bewegung setzt.
 BUTTON WEITER 13
-13: Du hörst reges treiben. Als du nachschaust siehst du Leute vor einem der dicht aneinander gereihten Häuser eine leuchtende Reklame mit der Aufschrift: "Berkinos Bar". Vermummte Gestalten unterhalten sich im Dunkel der Gassen. Wachen mit schusswaffen patroullieren durch die geschotterten Straßen der Stadt. Die Spitze eines großen Gebäudes kannst du in einiger Entfernung erkennen. Auf ihr steht ein Schild mit der Aufschrift "Trust industries". Der Wagen biegt in eine nebenstraße ab und fährt auf eine Lagerhalle zu, die sofort ihr Tor öffnet.
-
+13: Du hörst reges treiben. Als du nachschaust siehst du Leute vor einem der dicht aneinander gereihten Häuser eine leuchtende Reklame mit der Aufschrift: "Berkinos Bar". Vermummte Gestalten unterhalten sich im Dunkel der Gassen. Wachen mit Schusswaffen patroullieren durch die geschotterten Straßen der Stadt. Die Spitze eines großen Gebäudes kannst du in einiger Entfernung erkennen. Auf ihr steht ein Schild mit der Aufschrift "Trust industries". Der Wagen biegt in eine nebenstraße ab und fährt auf eine Lagerhalle zu, die sofort ihr Tor öffnet.
+BUTTON WEITER 14
+14: Als sich das Tor wieder schließt, hält der Wagen an.
+BUTTON Horchen
+CONTINUE 15
+15: Du hörst mehrere Stimmen. Unter einigen davon erkennst du den Fahrer wieder, der sich scheinbar über dich am unterhalten ist. Genaueres kannst du dich heraus hören, aber plötzlich scheinen sich Schritte dem Wagen zu nähern.
+BUTTON Messer ziehen
+CONTINUE 16
+16: Du ziehst das Messer, und plötzlich....
 
 
