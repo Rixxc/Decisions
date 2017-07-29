@@ -1,7 +1,5 @@
 package com.rixxc.decisions;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -42,7 +40,6 @@ public class spiel extends AppCompatActivity {
     private SharedPreferences.Editor EDITSETTINGS;
     private SharedPreferences keys;
     private SharedPreferences.Editor editkeys;
-    private GestureDetector gestureScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
