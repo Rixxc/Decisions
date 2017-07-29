@@ -23,7 +23,7 @@
         //Drehen des Bildschirms verhinder
         <activity android:name=".EndScreen" />
         <activity android:name=".Einstellungen"/>
-            //android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Charaktere"/>
     </application>
 
 </manifest>
