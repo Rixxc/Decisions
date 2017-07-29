@@ -1,0 +1,39 @@
+Grundlegendes Konzept:
+-Text-basiertes Android Spiel
+-Entscheidungsmöglichkeiten, wodurch aktiv der Spielablauf beeinflusst werden kann
+
+Kurze Erklärung:"Tickets" mit der endziffer "0" sind übertickets,die selbst keine eigentliche Implementierung enthalten. Diese Tickets geben einen kurzen Überblick
+                über die Untertickets.
+                Die erste Ziffer beschreibt eine "Kategorie" in der sich mehrere "Tickets" sammeln. Beispielsweise "0" = Gerüst, "1" = Charaktersystem
+DONE:
+0000: Gerüst
+0001: Einfügen einer Text-Datei, um die Geschichte auf den Bildschirm zu bringen
+0002: Einfügen einer Button-Struktur, um Eingaben durch den Nutzer zu ermöglichen
+0003: Hinzufügen eines Hauptmenüs
+0004: Speichern Button, sowie die Möglichkeit, ein neues Spiel zu starten
+0100: Einstellungsmenü
+ 0102: Ein-/Ausschalten der Musik
+ 0103: Landscape-Modus
+3001: Einfügen von Musik
+
+
+
+
+TODOS:
+1000: Charaktersystem
+1001: Spielstand bezieht sich auf einen ausgewählten Charakter
+1002: Item-System, welches Auswirkungen auf die Handlungsmäglichkeiten des Spielers hat, Bsp: fehlende Waffe ermöglicht es nicht, sich zu verteidigen
+1003: Attribut System: sinnvoll,um die Handlungsmöglichkeiten weiter zu formen und die einzelnen Abenteuer stärker zu beeinflussen,
+      Bsp: niedriger Schlossknacken Wert ermöglicht es nicht eine Tür zu öffnen
+
+2000: Grafiken und farbliche Untermalung:
+ 2001: Logo für das Spiel: Hauptlogo
+ 2002: Hintergrundbild für das Hauptmenü
+ 2003: Grafiken für Buttons
+
+3002: Einfügen von Button-Geräuschen evtl. signifikante Geräusche bei wiederkehrenden Buttons (Bsp. Kampf oder horchen)
+3003: Einfügen von Geräuschen für Reaktionen
+
+4000: Animationen
+4002: Button-Animation
+4003: Start-Animation
