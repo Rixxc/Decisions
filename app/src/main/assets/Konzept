@@ -24,6 +24,7 @@ TODOS:
 1000: Charaktersystem
 1001: Spielstand bezieht sich auf einen ausgewählten Charakter
 1002: Item-System, welches Auswirkungen auf die Handlungsmäglichkeiten des Spielers hat, Bsp: fehlende Waffe ermöglicht es nicht, sich zu verteidigen
+1003: Item-Datenbank anlegen
 
 2000: Grafiken und farbliche Untermalung:
  2001: Logo für das Spiel: Hauptlogo
