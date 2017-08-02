@@ -16,6 +16,7 @@ DONE:
  0103: Landscape-Modus
 0201: Hinzufügen einer History
 3001: Einfügen von Musik
+8000: Refactoring
 
 
 
@@ -39,13 +40,13 @@ TODOS:
 4002: Button-Animation
 4003: Start-Animation
 
-5000: Plattform zur Erstellung
+5000: Plattform zur Erstellung von Abenteuern
 
-6000: (Komplex) Implementierung eines Multiplayer Feature (Komplex)
+6000: (Komplex) Implementierung eines Multiplayer Features (Komplex)
 
 7000: Vertonung des Abenteuers
 0101: Das aktuell ausgewählte Abenteuer soll im Hauptmenü angezeigt werden (Layout unklar)
-
+0006: Pfad-Verbesserung
 
 Aktuelle TODOS:
 0005: Anzeige des aktuellen Menüs in der derzeitigen View
