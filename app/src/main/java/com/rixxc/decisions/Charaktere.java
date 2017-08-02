@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,13 +13,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class Charaktere extends AppCompatActivity {
 
     private ListView characters;
     private ArrayList<File> dateinliste;
-    private ArrayList<String> characterNames;
+    public static ArrayList<String> characterNames;
     private Button newCharacter;
     private File obb;
 
@@ -46,6 +46,15 @@ public class Charaktere extends AppCompatActivity {
                         startActivity(intent);
                         break;
                 }
+            }
+        });
+
+        characters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Charaktere.this, CharakterInfo.class);
+                intent.putExtra("Charakter", characterNames.get(position));
+                startActivity(intent);
             }
         });
 

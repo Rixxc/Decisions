@@ -24,7 +24,8 @@
         <activity android:name=".EndScreen" />
         <activity android:name=".Einstellungen" />
         <activity android:name=".Charaktere" />
-        <activity android:name=".neuerCharakter"></activity>
+        <activity android:name=".neuerCharakter" />
+        <activity android:name=".CharakterInfo"></activity>
     </application>
 
 </manifest>
