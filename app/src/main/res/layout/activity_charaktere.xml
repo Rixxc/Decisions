@@ -8,13 +8,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:id="@+id/listView" />
+        android:id="@+id/characterlist" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/newcharacter"
         android:layout_width="100pt"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listView"
+        android:layout_below="@+id/characterlist"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:text="neuer Charakter" />
