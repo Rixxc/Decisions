@@ -27,9 +27,124 @@
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignBaseline="@+id/LName"
+        android:layout_alignBottom="@+id/LName"
+        android:layout_alignLeft="@+id/stärke"
+        android:layout_alignStart="@+id/stärke" />
+
+    <EditText
+        android:id="@+id/stärke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/LStärke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stärke:"
+        android:layout_alignBaseline="@+id/stärke"
+        android:layout_alignBottom="@+id/stärke"
+        android:layout_alignLeft="@+id/LName"
+        android:layout_alignStart="@+id/LName" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Verfügbare Punkte : 15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/LAusdauer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ausdauer:"
+        android:layout_below="@+id/stärke"
+        android:layout_alignLeft="@+id/LStärke"
+        android:layout_alignStart="@+id/LStärke"
+        android:layout_marginTop="19dp" />
+
+    <EditText
+        android:id="@+id/ausdauer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_alignTop="@+id/LAusdauer"
+        android:layout_alignLeft="@+id/stärke"
+        android:layout_alignStart="@+id/stärke" />
+
+    <EditText
+        android:id="@+id/intelligenz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ausdauer"
+        android:layout_alignStart="@+id/ausdauer"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/LIntelligenz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intelligenz:"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/LAusdauer"
+        android:layout_alignEnd="@+id/LAusdauer" />
+
+    <TextView
+        android:id="@+id/LGeschicklichkeit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="Geschicklichkeit:"
+        android:layout_below="@+id/intelligenz"
+        android:layout_alignLeft="@+id/LIntelligenz"
+        android:layout_alignStart="@+id/LIntelligenz" />
+
+    <EditText
+        android:id="@+id/geschicklichkeit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/intelligenz"
+        android:layout_alignRight="@+id/intelligenz"
+        android:layout_below="@+id/intelligenz"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/mut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/createCharakter"
+        android:layout_alignLeft="@+id/geschicklichkeit"
+        android:layout_alignStart="@+id/geschicklichkeit"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/LMut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mut:"
+        android:layout_alignBaseline="@+id/mut"
+        android:layout_alignBottom="@+id/mut"
+        android:layout_alignLeft="@+id/LGeschicklichkeit"
+        android:layout_alignStart="@+id/LGeschicklichkeit" />
 </RelativeLayout>
