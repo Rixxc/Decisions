@@ -110,12 +110,12 @@ public class Einstellungen extends AppCompatActivity {
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
-            FileNamen[i] = Files[i].getName();
+            FileNamen[i] = Files[i].getName().substring(0, Files[i].getName().length() - 4);
         }
         String[] FileNamen2 = new String[Files2.length+1];
         FileNamen2[0] = "Kein Charakter";
         for (int i = 0; i < Files2.length; i++){
-            FileNamen2[i+1] = Files2[i].getName();
+            FileNamen2[i+1] = Files2[i].getName().substring(0,Files2[i].getName().length() - 4);
         }
 
         // Selection of the spinner
@@ -155,8 +155,8 @@ public class Einstellungen extends AppCompatActivity {
     }
     @Override
     public void onPause() {
-        editsettings.putString("Abenteuer", abenteuer.getSelectedItem().toString());
-        editsettings.putString("Charakter", charakter.getSelectedItem().toString());
+        editsettings.putString("Abenteuer", abenteuer.getSelectedItem().toString() + ".adv");
+        editsettings.putString("Charakter", charakter.getSelectedItem().toString() + ".chr");
         editsettings.commit();
         mediaPlayer.pause();
 
