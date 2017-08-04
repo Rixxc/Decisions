@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -131,6 +132,16 @@ public class Einstellungen extends AppCompatActivity {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         charakter.setAdapter(spinnerArrayAdapter2);
 
+        FileNamen = new String[Files.length];
+        for (int i = 0; i < Files.length; i++){
+            FileNamen[i] = Files[i].getName();
+        }
+        FileNamen2 = new String[Files2.length+1];
+        FileNamen2[0] = "Kein Charakter";
+        for (int i = 0; i < Files2.length; i++){
+            FileNamen2[i+1] = Files2[i].getName();
+        }
+
         int Auswahl = 0;
         for(int i = 0; i < FileNamen.length; i++){
             if(FileNamen[i].equals(settings.getString("Abenteuer", "Decision.adv"))){
@@ -146,7 +157,7 @@ public class Einstellungen extends AppCompatActivity {
                 Auswahl2 = i;
             }
         }
-
+        Log.e("Auswahl", settings.getString("Charakter", "Kein Charakter"));
         charakter.setSelection(Auswahl2);
 
         if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){

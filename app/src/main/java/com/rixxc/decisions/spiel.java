@@ -25,10 +25,13 @@ import java.io.FileReader;
 public class spiel extends AppCompatActivity {
 
     final private File SDIALOG = MainActivity.Dialog;
+    final private File CHARAKTER = MainActivity.Charakter;
     final private String SAVEKEY = SDIALOG.getName();
     final private String SHKEY = SAVEKEY + "key";
     final private boolean NEUESSPIEL = MainActivity.neuesSpiel;
     final private MediaPlayer mediaPlayer = MainActivity.mediaPlayer;
+    private String name;
+    private int stärke,ausdauer,intelligenz,geschicklichkeit,mut;
     private int eip;
     private TextView DialogAusgabe;
     private Button eingabe1,eingabe2,eingabe3;
@@ -62,6 +65,23 @@ public class spiel extends AppCompatActivity {
             editor.remove(SAVEKEY).commit();
             editkeys.clear().commit();
         }
+
+        try {
+            FileReader fr = new FileReader(CHARAKTER);
+            BufferedReader br = new BufferedReader(fr);
+
+            name = br.readLine().split(":")[1];
+            stärke = Integer.parseInt(br.readLine().split(":")[1]);
+            ausdauer = Integer.parseInt(br.readLine().split(":")[1]);
+            intelligenz = Integer.parseInt(br.readLine().split(":")[1]);
+            geschicklichkeit = Integer.parseInt(br.readLine().split(":")[1]);
+            mut = Integer.parseInt(br.readLine().split(":")[1]);
+        } catch (Exception e) {
+            Toast.makeText(spiel.this, "Es ist ein Fehler aufgetreten", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(spiel.this, MainActivity.class);
+            startActivity(intent);
+        }
+
 
         //Entscheidet ob Activity im Landscape oder Portrait Mode läuft
         if (SETTINGS.getString("Orientierung", "portrait").equals("portrait")) {

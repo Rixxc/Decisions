@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final String DOWNLOADURL = "https://dl.dropboxusercontent.com/s/4b1rx3e15h35ybg/Decision.txt";
 
-    public static File Dialog;
+    public static File Dialog,Charakter;
     public static boolean neuesSpiel;
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     private ViewGroup mViewGroupe;
     private Button starten,neu,history,charaktere,einstellungen;
-    private File obb;
-    private File[] Files;
+    private File obb,obb2;
+    private File[] Files,Files2;
     private ProgressDialog dialog;
     private Thread down;
     private SharedPreferences settings;
@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         if (!obb.exists()){
             obb.mkdirs();
         }
+        obb2 = new File(getObbDir(), "Charaktere");
+        if (!obb2.exists()){
+            obb2.mkdirs();
+        }
 
         //Lädt das Standartabenteuer in den Abenteuerordner
         Abenteuereinbinden();
@@ -137,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Files = obb.listFiles(ff);
+        FileFilter ff2 = new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".chr");
+            }
+        };
+        Files2 = obb2.listFiles(ff2);
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
@@ -211,16 +222,27 @@ public class MainActivity extends AppCompatActivity {
     }
     public void starten(boolean pNeuesSpiel){
         Dialog = null;
+        Charakter = null;
         for (int i = 0; i < Files.length; i++){
             if (Files[i].getName().equals(settings.getString("Abenteuer", "Decision.adv"))){
                 Dialog = Files[i];
                 break;
             }
         }
+        for (int i = 0; i < Files2.length; i++){
+            if (Files2[i].getName().equals(settings.getString("Charakter", "Kein Charakter"))){
+                Charakter = Files2[i];
+                break;
+            }
+        }
         neuesSpiel = pNeuesSpiel;
         if(Dialog != null) {
-            Intent starten = new Intent(MainActivity.this, spiel.class);
-            startActivity(starten);
+            if(Charakter != null){
+                Intent starten = new Intent(MainActivity.this, spiel.class);
+                startActivity(starten);
+            }else{
+                Toast.makeText(MainActivity.this, "Kein Charakter ausgewählt", Toast.LENGTH_LONG).show();
+            }
         }else{
             Toast.makeText(MainActivity.this, "Kein Abneteuer ausgewählt", Toast.LENGTH_LONG).show();
         }
