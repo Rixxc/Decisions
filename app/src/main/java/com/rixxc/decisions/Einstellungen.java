@@ -3,6 +3,7 @@ package com.rixxc.decisions;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -19,9 +20,9 @@ public class Einstellungen extends AppCompatActivity {
     private SharedPreferences.Editor editsettings;
     private Switch toggle;
     private Switch music;
-    private Spinner spinner;
-    private File obb;
-    private File[] Files;
+    private Spinner abenteuer,charakter;
+    private File obb,obb2;
+    private File[] Files,Files2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,10 @@ public class Einstellungen extends AppCompatActivity {
         if (!obb.exists()){
             obb.mkdirs();
         }
+        obb2 = new File(getObbDir(), "Charaktere");
+        if (!obb2.exists()){
+            obb2.mkdirs();
+        }
 
         // Array of choices
         FileFilter ff = new FileFilter() {
@@ -95,20 +100,36 @@ public class Einstellungen extends AppCompatActivity {
             }
         };
         Files = obb.listFiles(ff);
+        FileFilter ff2 = new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".chr");
+            }
+        };
+        Files2 = obb2.listFiles(ff2);
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
             FileNamen[i] = Files[i].getName();
         }
+        String[] FileNamen2 = new String[Files2.length+1];
+        FileNamen2[0] = "Kein Charakter";
+        for (int i = 0; i < Files2.length; i++){
+            FileNamen2[i+1] = Files2[i].getName();
+        }
 
         // Selection of the spinner
-        spinner = (Spinner) findViewById(R.id.Abenteuerwahl);
+        abenteuer = (Spinner) findViewById(R.id.Abenteuerwahl);
+        charakter = (Spinner) findViewById(R.id.Charakterauswahl);
 
 
         //Apply the Array to the Spinner
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, FileNamen);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(spinnerArrayAdapter);
+        abenteuer.setAdapter(spinnerArrayAdapter);
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, FileNamen2);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        charakter.setAdapter(spinnerArrayAdapter2);
 
         int Auswahl = 0;
         for(int i = 0; i < FileNamen.length; i++){
@@ -117,7 +138,16 @@ public class Einstellungen extends AppCompatActivity {
             }
         }
 
-        spinner.setSelection(Auswahl);
+        abenteuer.setSelection(Auswahl);
+
+        int Auswahl2 = 0;
+        for(int i = 0; i < FileNamen2.length; i++){
+            if(FileNamen2[i].equals(settings.getString("Charakter", "Kein Charakter"))){
+                Auswahl2 = i;
+            }
+        }
+
+        charakter.setSelection(Auswahl2);
 
         if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){
             mediaPlayer.start();
@@ -125,7 +155,8 @@ public class Einstellungen extends AppCompatActivity {
     }
     @Override
     public void onPause() {
-        editsettings.putString("Abenteuer", spinner.getSelectedItem().toString());
+        editsettings.putString("Abenteuer", abenteuer.getSelectedItem().toString());
+        editsettings.putString("Charakter", charakter.getSelectedItem().toString());
         editsettings.commit();
         mediaPlayer.pause();
 

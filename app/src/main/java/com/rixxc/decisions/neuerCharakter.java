@@ -46,6 +46,28 @@ public class neuerCharakter extends AppCompatActivity {
             return false;
         }
     };
+    private View.OnTouchListener onTouch = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int istärke,iausdauer,imut,iintelligenz,igeschicklichkeit;
+            istärke = Integer.parseInt(stärke.getText().toString());
+            iausdauer = Integer.parseInt(ausdauer.getText().toString());
+            imut = Integer.parseInt(mut.getText().toString());
+            iintelligenz = Integer.parseInt(intelligenz.getText().toString());
+            igeschicklichkeit = Integer.parseInt(geschicklichkeit.getText().toString());
+
+            int sum = 15 - ((istärke+iausdauer+imut+iintelligenz+igeschicklichkeit) - 50);
+
+            if(istärke < 10 || imut < 10 || iausdauer < 10 || iintelligenz < 10 || igeschicklichkeit < 10){
+                punkte.setText("Keiner der Werte darf unter 10 liegen");
+            }else if(sum < 0){
+                punkte.setText("Es wurden zu viele Punkte ausgegeben");
+            }else{
+                punkte.setText("Verfügbare Punkte : " + sum);
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +75,7 @@ public class neuerCharakter extends AppCompatActivity {
         setContentView(R.layout.activity_neuer_charakter);
         setTitle("Charaktere");
 
-        obb = new File(getObbDir(), "Charactere");
+        obb = new File(getObbDir(), "Charaktere");
         punkte = (TextView) findViewById(R.id.LPunkte);
         name = (EditText) findViewById(R.id.Name);
         stärke = (EditText) findViewById(R.id.stärke);
@@ -74,6 +96,12 @@ public class neuerCharakter extends AppCompatActivity {
         mut.setOnEditorActionListener(onEdit);
         intelligenz.setOnEditorActionListener(onEdit);
         geschicklichkeit.setOnEditorActionListener(onEdit);
+
+        stärke.setOnTouchListener(onTouch);
+        ausdauer.setOnTouchListener(onTouch);
+        mut.setOnTouchListener(onTouch);
+        intelligenz.setOnTouchListener(onTouch);
+        geschicklichkeit.setOnTouchListener(onTouch);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override

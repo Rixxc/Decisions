@@ -28,7 +28,7 @@ public class Charaktere extends AppCompatActivity {
         setContentView(R.layout.activity_charaktere);
         setTitle("Charaktere");
 
-        obb = new File(getObbDir(), "Charactere");
+        obb = new File(getObbDir(), "Charaktere");
         if (!obb.exists()){
             obb.mkdirs();
         }

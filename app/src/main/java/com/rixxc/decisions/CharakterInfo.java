@@ -29,7 +29,7 @@ public class CharakterInfo extends AppCompatActivity {
         charakterName = getIntent().getExtras().getString("Charakter");
         setTitle(charakterName);
 
-        obb = new File(getObbDir(), "Charactere");
+        obb = new File(getObbDir(), "Charaktere");
         charakter = new File(obb, charakterName + ".chr");
 
         name = (TextView) findViewById(R.id.InfoName);
