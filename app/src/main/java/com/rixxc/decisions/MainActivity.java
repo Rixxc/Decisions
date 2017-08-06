@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final String DOWNLOADURL = "https://dl.dropboxusercontent.com/s/4b1rx3e15h35ybg/Decision.txt";
 
-    public static File Dialog,Charakter;
+    public static File Dialog;
     public static boolean neuesSpiel;
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     private ViewGroup mViewGroupe;
     private Button starten,neu,history,charaktere,einstellungen;
-    private File obb,obb2;
-    private File[] Files,Files2;
+    private File obb;
+    private File[] Files;
     private ProgressDialog dialog;
     private Thread down;
     private SharedPreferences settings;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private int debug = 1;
     private Thread playMusic;
     private boolean pressedOnece;
+    private SQLiteDatabase db;
     private View.OnClickListener onClickListener = new View.OnClickListener() {
 
         @Override
@@ -121,13 +125,17 @@ public class MainActivity extends AppCompatActivity {
         //Initialisiere settings
         settings = getSharedPreferences("settings", MODE_PRIVATE);
 
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        try{
+            db.rawQuery("SELECT * FROM charakter",null).getCount();
+        }catch(SQLiteException e){
+            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER)");
+        }
+
+
         obb = new File(getObbDir(), "Abenteuer");
         if (!obb.exists()){
             obb.mkdirs();
-        }
-        obb2 = new File(getObbDir(), "Charaktere");
-        if (!obb2.exists()){
-            obb2.mkdirs();
         }
 
         //Lädt das Standartabenteuer in den Abenteuerordner
@@ -141,13 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Files = obb.listFiles(ff);
-        FileFilter ff2 = new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(".chr");
-            }
-        };
-        Files2 = obb2.listFiles(ff2);
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
@@ -222,27 +223,23 @@ public class MainActivity extends AppCompatActivity {
     }
     public void starten(boolean pNeuesSpiel){
         Dialog = null;
-        Charakter = null;
+        String[] column = {"name"};
+        String[] args = {settings.getString("Charakter", "Kein Charakter")};
+        Cursor result = db.query("Charakter",column,"name=?",args,null,null,null);
+        if(args[0] == "Kein Charakter" || result.getCount() == 0){
+            Toast.makeText(MainActivity.this, "Kein Charakter ausgewählt", Toast.LENGTH_LONG).show();
+        }
         for (int i = 0; i < Files.length; i++){
             if (Files[i].getName().equals(settings.getString("Abenteuer", "Decision.adv"))){
                 Dialog = Files[i];
                 break;
             }
         }
-        for (int i = 0; i < Files2.length; i++){
-            if (Files2[i].getName().equals(settings.getString("Charakter", "Kein Charakter"))){
-                Charakter = Files2[i];
-                break;
-            }
-        }
         neuesSpiel = pNeuesSpiel;
-        if(Dialog != null) {
-            if(Charakter != null){
-                Intent starten = new Intent(MainActivity.this, spiel.class);
-                startActivity(starten);
-            }else{
-                Toast.makeText(MainActivity.this, "Kein Charakter ausgewählt", Toast.LENGTH_LONG).show();
-            }
+        if(Dialog != null){
+            Intent starten = new Intent(MainActivity.this, spiel.class);
+            starten.putExtra("Charakter", settings.getString("Charakter",null));
+            startActivity(starten);
         }else{
             Toast.makeText(MainActivity.this, "Kein Abneteuer ausgewählt", Toast.LENGTH_LONG).show();
         }
@@ -331,5 +328,10 @@ public class MainActivity extends AppCompatActivity {
             dialog.setCancelable(true);
             //Toast.makeText(MainActivity.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

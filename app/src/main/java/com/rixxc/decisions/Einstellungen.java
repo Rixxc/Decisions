@@ -2,6 +2,8 @@ package com.rixxc.decisions;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -22,8 +24,9 @@ public class Einstellungen extends AppCompatActivity {
     private Switch toggle;
     private Switch music;
     private Spinner abenteuer,charakter;
-    private File obb,obb2;
-    private File[] Files,Files2;
+    private File obb;
+    private File[] Files;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class Einstellungen extends AppCompatActivity {
 
         setTitle("Einstellungen");
 
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();
 
@@ -88,10 +92,6 @@ public class Einstellungen extends AppCompatActivity {
         if (!obb.exists()){
             obb.mkdirs();
         }
-        obb2 = new File(getObbDir(), "Charaktere");
-        if (!obb2.exists()){
-            obb2.mkdirs();
-        }
 
         // Array of choices
         FileFilter ff = new FileFilter() {
@@ -101,22 +101,21 @@ public class Einstellungen extends AppCompatActivity {
             }
         };
         Files = obb.listFiles(ff);
-        FileFilter ff2 = new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(".chr");
-            }
-        };
-        Files2 = obb2.listFiles(ff2);
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
             FileNamen[i] = Files[i].getName().substring(0, Files[i].getName().length() - 4);
         }
-        String[] FileNamen2 = new String[Files2.length+1];
-        FileNamen2[0] = "Kein Charakter";
-        for (int i = 0; i < Files2.length; i++){
-            FileNamen2[i+1] = Files2[i].getName().substring(0,Files2[i].getName().length() - 4);
+
+
+        String[] name = {"name"};
+        Cursor result = db.query("Charakter",name,null,null,null,null,null);
+        result.moveToFirst();
+        String[] CharakterNamen = new String[result.getCount()+1];
+        CharakterNamen[0] = "Kein Charakter";
+        for (int i = 0; i < result.getCount(); i++){
+            CharakterNamen[i+1] = result.getString(0);
+            result.moveToNext();
         }
 
         // Selection of the spinner
@@ -128,18 +127,13 @@ public class Einstellungen extends AppCompatActivity {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, FileNamen);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         abenteuer.setAdapter(spinnerArrayAdapter);
-        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, FileNamen2);
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, CharakterNamen);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         charakter.setAdapter(spinnerArrayAdapter2);
 
         FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
             FileNamen[i] = Files[i].getName();
-        }
-        FileNamen2 = new String[Files2.length+1];
-        FileNamen2[0] = "Kein Charakter";
-        for (int i = 0; i < Files2.length; i++){
-            FileNamen2[i+1] = Files2[i].getName();
         }
 
         int Auswahl = 0;
@@ -152,8 +146,8 @@ public class Einstellungen extends AppCompatActivity {
         abenteuer.setSelection(Auswahl);
 
         int Auswahl2 = 0;
-        for(int i = 0; i < FileNamen2.length; i++){
-            if(FileNamen2[i].equals(settings.getString("Charakter", "Kein Charakter"))){
+        for(int i = 0; i < CharakterNamen.length; i++){
+            if(CharakterNamen[i].equals(settings.getString("Charakter", "Kein Charakter"))){
                 Auswahl2 = i;
             }
         }
@@ -167,10 +161,15 @@ public class Einstellungen extends AppCompatActivity {
     @Override
     public void onPause() {
         editsettings.putString("Abenteuer", abenteuer.getSelectedItem().toString() + ".adv");
-        editsettings.putString("Charakter", charakter.getSelectedItem().toString() + ".chr");
+        editsettings.putString("Charakter", charakter.getSelectedItem().toString());
         editsettings.commit();
         mediaPlayer.pause();
 
         super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

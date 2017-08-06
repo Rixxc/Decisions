@@ -1,6 +1,7 @@
 package com.rixxc.decisions;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,13 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 public class neuerCharakter extends AppCompatActivity {
 
@@ -24,6 +19,7 @@ public class neuerCharakter extends AppCompatActivity {
     private EditText name,stärke,ausdauer,intelligenz,geschicklichkeit,mut;
     private TextView punkte;
     private File obb;
+    private SQLiteDatabase db;
     private TextView.OnEditorActionListener onEdit = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -75,6 +71,8 @@ public class neuerCharakter extends AppCompatActivity {
         setContentView(R.layout.activity_neuer_charakter);
         setTitle("Charaktere");
 
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+
         obb = new File(getObbDir(), "Charaktere");
         punkte = (TextView) findViewById(R.id.LPunkte);
         name = (EditText) findViewById(R.id.Name);
@@ -108,14 +106,8 @@ public class neuerCharakter extends AppCompatActivity {
             public void onClick(View v) {
                 switch(v.getId()){
                     case R.id.createCharakter:
-                        File charakter = new File(obb, name.getText().toString() + ".chr");
-                        boolean contains = false;
-                        for(File f : obb.listFiles()){
-                            if(f.getName().equals(charakter.getName())){
-                                contains = true;
-                            }
-                        }
-                        if(!contains){
+                        String[] args = {name.getText().toString()};
+                        if(db.rawQuery("SELECT * FROM charakter WHERE name=?",args).getCount() == 0){
                             try{
                                 int istärke,iausdauer,imut,iintelligenz,igeschicklichkeit;
                                 istärke = Integer.parseInt(stärke.getText().toString());
@@ -134,26 +126,11 @@ public class neuerCharakter extends AppCompatActivity {
                                     throw new Exception("Kein Wert darf unter 10 liegen");
                                 }
 
-                                FileWriter fw = new FileWriter(charakter);
-                                BufferedWriter bw = new BufferedWriter(fw);
+                                db.execSQL("INSERT INTO charakter(name,stärke,ausdauer,intelligenz,geschicklichkeit,mut,punkte) VALUES ('" + name.getText().toString() + "','" + istärke + "','" + iausdauer + "','" + iintelligenz + "','" + igeschicklichkeit + "','" + imut + "','" + (15 - ((istärke+iausdauer+imut+iintelligenz+igeschicklichkeit) - 50)) + "')");
+                                db.close();
 
-                                bw.write("Name:" + name.getText().toString());
-                                bw.newLine();
-                                bw.write("Stärke:" + istärke);
-                                bw.newLine();
-                                bw.write("Ausdauer:" + iausdauer);
-                                bw.newLine();
-                                bw.write("Intelligenz:" + iintelligenz);
-                                bw.newLine();
-                                bw.write("Geschicklichkeit:" + igeschicklichkeit);
-                                bw.newLine();
-                                bw.write("Mut:" + imut);
-                                bw.newLine();
-
-                                bw.flush();
-                                bw.close();
-
-                                charakter.createNewFile();
+                                Intent intent = new Intent(neuerCharakter.this, Charaktere.class);
+                                startActivity(intent);
                             }catch (Exception e) {
                                 if(e.getMessage().equals("Es wurden zu viele Punkte verteilt") || e.getMessage().equals("Ungültiger Name") || e.getMessage().equals("Kein Wert darf unter 10 liegen")){
                                     Toast.makeText(neuerCharakter.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -161,8 +138,7 @@ public class neuerCharakter extends AppCompatActivity {
                                     Toast.makeText(neuerCharakter.this, "Es ist ein Fehler beim erstellen des Charakters aufgetreten", Toast.LENGTH_LONG).show();
                                 }
                             }
-                            Intent intent = new Intent(neuerCharakter.this, Charaktere.class);
-                            startActivity(intent);
+
                         }else{
                             Toast.makeText(neuerCharakter.this, "Dieser Name ist bereits vergeben", Toast.LENGTH_LONG).show();
                         }

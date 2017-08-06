@@ -1,26 +1,23 @@
 package com.rixxc.decisions;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Charaktere extends AppCompatActivity {
 
     private ListView characters;
-    private ArrayList<File> dateinliste;
     public static ArrayList<String> characterNames;
     private Button newCharacter;
-    private File obb;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +25,7 @@ public class Charaktere extends AppCompatActivity {
         setContentView(R.layout.activity_charaktere);
         setTitle("Charaktere");
 
-        obb = new File(getObbDir(), "Charaktere");
-        if (!obb.exists()){
-            obb.mkdirs();
-        }
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
 
         characters = (ListView) findViewById(R.id.characterlist);
         newCharacter = (Button) findViewById(R.id.newcharacter);
@@ -68,23 +62,26 @@ public class Charaktere extends AppCompatActivity {
     }
 
     private void arrayListSetup() {
-        dateinliste = new ArrayList<>();
         characterNames = new ArrayList<>();
 
-        dateinliste.addAll(Arrays.asList(obb.listFiles()));
-        Collections.sort(dateinliste);
-        Collections.reverse(dateinliste);
+        String[] columns = {"name"};
+        Cursor result = db.query("charakter", columns,null,null,null,null,null);
 
-        for(File f : dateinliste){
-            characterNames.add(f.getName().substring(0,f.getName().length() - 4));
+        result.moveToFirst();
+        for(int i = 0; i < result.getCount(); i++){
+            characterNames.add(result.getString(0));
+            result.moveToNext();
         }
-
-
     }
 
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(Charaktere.this, MainActivity.class);
         startActivity(intent);
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

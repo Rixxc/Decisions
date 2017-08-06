@@ -3,6 +3,8 @@ package com.rixxc.decisions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,6 @@ import java.io.FileReader;
 public class spiel extends AppCompatActivity {
 
     final private File SDIALOG = MainActivity.Dialog;
-    final private File CHARAKTER = MainActivity.Charakter;
     final private String SAVEKEY = SDIALOG.getName();
     final private String SHKEY = SAVEKEY + "key";
     final private boolean NEUESSPIEL = MainActivity.neuesSpiel;
@@ -43,10 +44,32 @@ public class spiel extends AppCompatActivity {
     private SharedPreferences.Editor EDITSETTINGS;
     private SharedPreferences keys;
     private SharedPreferences.Editor editkeys;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+
+        name = getIntent().getStringExtra("Charakter");
+        Log.e("name",name);
+
+        String[] column = {"stärke","ausdauer","intelligenz","geschicklichkeit","mut"};
+        String[] args = {name};
+        Cursor result = db.query("Charakter", column,"name=?",args,null,null,null);
+        result.moveToFirst();
+        stärke = result.getInt(0);
+        ausdauer = result.getInt(1);
+        intelligenz = result.getInt(2);
+        geschicklichkeit = result.getInt(3);
+        mut = result.getInt(4);
+
+        Log.e("Werte",stärke+"");
+        Log.e("Werte",ausdauer+"");
+        Log.e("Werte",intelligenz+"");
+        Log.e("Werte", geschicklichkeit+"");
+        Log.e("Werte",mut+"");
 
         //SharedPreferences, für saving, initialisieren
         sharedPreferences = getSharedPreferences("Gamesave", MODE_PRIVATE);
@@ -64,22 +87,6 @@ public class spiel extends AppCompatActivity {
         if (NEUESSPIEL) {
             editor.remove(SAVEKEY).commit();
             editkeys.clear().commit();
-        }
-
-        try {
-            FileReader fr = new FileReader(CHARAKTER);
-            BufferedReader br = new BufferedReader(fr);
-
-            name = br.readLine().split(":")[1];
-            stärke = Integer.parseInt(br.readLine().split(":")[1]);
-            ausdauer = Integer.parseInt(br.readLine().split(":")[1]);
-            intelligenz = Integer.parseInt(br.readLine().split(":")[1]);
-            geschicklichkeit = Integer.parseInt(br.readLine().split(":")[1]);
-            mut = Integer.parseInt(br.readLine().split(":")[1]);
-        } catch (Exception e) {
-            Toast.makeText(spiel.this, "Es ist ein Fehler aufgetreten", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(spiel.this, MainActivity.class);
-            startActivity(intent);
         }
 
 
@@ -515,5 +522,10 @@ public class spiel extends AppCompatActivity {
         }else{
             return -1;
         }
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }
