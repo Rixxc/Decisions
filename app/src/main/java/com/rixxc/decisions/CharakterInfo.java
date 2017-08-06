@@ -1,6 +1,8 @@
 package com.rixxc.decisions;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +21,9 @@ import java.io.FileWriter;
 public class CharakterInfo extends AppCompatActivity {
 
     private String charakterName;
-    private File obb,charakter;
-    private TextView name,stärke,ausdauer,intelligenz,geschicklichkeit,mut;
+    private TextView name,stärke,ausdauer,intelligenz,geschicklichkeit,mut,punkte;
+    private SQLiteDatabase db;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,31 +32,32 @@ public class CharakterInfo extends AppCompatActivity {
         charakterName = getIntent().getExtras().getString("Charakter");
         setTitle(charakterName);
 
-        obb = new File(getObbDir(), "Charaktere");
-        charakter = new File(obb, charakterName + ".chr");
-
         name = (TextView) findViewById(R.id.InfoName);
         stärke = (TextView) findViewById(R.id.InfoStärke);
         ausdauer = (TextView) findViewById(R.id.InfoAusdauer);
         intelligenz = (TextView) findViewById(R.id.InfoIntelligenz);
         geschicklichkeit = (TextView) findViewById(R.id.InfoGeschicklichkeit);
         mut = (TextView) findViewById(R.id.InfoMut);
+        punkte = (TextView) findViewById(R.id.InfoPunkte);
 
-        try{
-            FileReader fr = new FileReader(charakter);
-            BufferedReader br = new BufferedReader(fr);
+        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
 
-            name.setText(br.readLine());
-            stärke.setText(br.readLine());
-            ausdauer.setText(br.readLine());
-            intelligenz.setText(br.readLine());
-            geschicklichkeit.setText(br.readLine());
-            mut.setText(br.readLine());
-        }catch (Exception e){
-            Toast.makeText(CharakterInfo.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(CharakterInfo.this, Charaktere.class);
-            startActivity(intent);
-        }
+        String EName = getIntent().getStringExtra("Charakter");
+
+        String[] column = {"stärke","ausdauer","intelligenz","geschicklichkeit","mut","punkte","id"};
+        String[] args = {EName};
+        Cursor result = db.query("Charakter", column,"name=?",args,null,null,null);
+        result.moveToFirst();
+
+        name.setText("Name: " + EName);
+        stärke.setText("Stärke: " + result.getInt(0));
+        ausdauer.setText("Ausdauer: " + result.getInt(1));
+        intelligenz.setText("Intelligenz: " + result.getInt(2));
+        geschicklichkeit.setText("Geschicklichkeit" + result.getInt(3));
+        mut.setText("Mut: " + result.getInt(4));
+        punkte.setText("Verbleibende Punkte: " + result.getInt(5));
+        id = result.getInt(6);
+
     }
 
     @Override
@@ -71,23 +75,17 @@ public class CharakterInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.löschen:
-                File[] files = obb.listFiles();
-                for(File f : files){
-                    if(f.getName().equals(charakterName + ".chr")){
-                        try {
-                            f.delete();
-                            break;
-                        }catch (Exception e){
-                            Toast.makeText(CharakterInfo.this, "Es ist ein Fehler beim löschen des Charakters aufgetreten", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-
+                db.execSQL("DELETE FROM Charakter WHERE id=" + id);
                 Intent intent = new Intent(CharakterInfo.this, Charaktere.class);
                 startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor result = db.query("Charakter",column,"name=?",args,null,null,null);
         if(args[0] == "Kein Charakter" || result.getCount() == 0){
             Toast.makeText(MainActivity.this, "Kein Charakter ausgewählt", Toast.LENGTH_LONG).show();
+            return;
         }
         for (int i = 0; i < Files.length; i++){
             if (Files[i].getName().equals(settings.getString("Abenteuer", "Decision.adv"))){

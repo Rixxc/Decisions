@@ -65,12 +65,6 @@ public class spiel extends AppCompatActivity {
         geschicklichkeit = result.getInt(3);
         mut = result.getInt(4);
 
-        Log.e("Werte",stärke+"");
-        Log.e("Werte",ausdauer+"");
-        Log.e("Werte",intelligenz+"");
-        Log.e("Werte", geschicklichkeit+"");
-        Log.e("Werte",mut+"");
-
         //SharedPreferences, für saving, initialisieren
         sharedPreferences = getSharedPreferences("Gamesave", MODE_PRIVATE);
         editor = sharedPreferences.edit();
