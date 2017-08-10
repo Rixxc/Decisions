@@ -25,7 +25,7 @@ public class Charaktere extends AppCompatActivity {
         setContentView(R.layout.activity_charaktere);
         setTitle("Charaktere");
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
 
         characters = (ListView) findViewById(R.id.characterlist);
         newCharacter = (Button) findViewById(R.id.newcharacter);

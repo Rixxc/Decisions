@@ -27,8 +27,6 @@ import java.io.FileReader;
 public class spiel extends AppCompatActivity {
 
     final private File SDIALOG = MainActivity.Dialog;
-    final private String SAVEKEY = SDIALOG.getName();
-    final private String SHKEY = SAVEKEY + "key";
     final private boolean NEUESSPIEL = MainActivity.neuesSpiel;
     final private MediaPlayer mediaPlayer = MainActivity.mediaPlayer;
     private String name;
@@ -50,7 +48,7 @@ public class spiel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
 
         name = getIntent().getStringExtra("Charakter");
         Log.e("name",name);
@@ -73,14 +71,27 @@ public class spiel extends AppCompatActivity {
         SETTINGS = getSharedPreferences("settings", MODE_PRIVATE);
         EDITSETTINGS = SETTINGS.edit();
 
-        //Initialisiere SharedPreferences keys
-        keys = getSharedPreferences(SHKEY, MODE_PRIVATE);
-        editkeys = keys.edit();
-
         //Setze Savegame zurück, falls neues Spiel ausgewählt wurde
         if (NEUESSPIEL) {
-            editor.remove(SAVEKEY).commit();
-            editkeys.clear().commit();
+            String[] args2 = {name,SDIALOG.getName()};
+            Cursor r = db.rawQuery("SELECT * FROM savepoints WHERE charakter=? AND abenteuer=?", args2);
+            if(r.getCount() == 1){
+                db.execSQL("UPDATE savepoints SET eip=1 WHERE charakter='" + name + "' AND abenteuer='" + SDIALOG.getName() + "'");
+            }
+        }
+
+        String[] args2 = {name,SDIALOG.getName()};
+        Cursor r = db.rawQuery("SELECT * FROM savepoints WHERE charakter=? AND abenteuer=?", args2);
+        if(r.getCount() == 0){
+            eip = 1;
+        }else if(r.getCount() == 1){
+            r.moveToFirst();
+            eip = r.getInt(3);
+        }else{
+            Toast.makeText(spiel.this, "Invalide Speicherstände",  Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(spiel.this, MainActivity.class);
+            finish();
+            startActivity(intent);
         }
 
 
@@ -93,7 +104,6 @@ public class spiel extends AppCompatActivity {
             setContentView(R.layout.activity_spiel_portrait);
 
             //Werte werden initialisiert
-            eip = sharedPreferences.getInt(SAVEKEY, 1);
             rl = (RelativeLayout) findViewById(R.id.spiel_portrait);
             DialogAusgabe = (TextView) findViewById(R.id.Dialog);
             eingabe1 = (Button) findViewById(R.id.eingabe1);
@@ -160,7 +170,6 @@ public class spiel extends AppCompatActivity {
             setContentView(R.layout.activity_spiel_landscape);
 
             //Werte werden initialisiert
-            eip = sharedPreferences.getInt(SAVEKEY, 1);
             DialogAusgabe = (TextView) findViewById(R.id.lDialog);
             rl = (RelativeLayout) findViewById(R.id.spiel_landscape);
             eingabe1 = (Button) findViewById(R.id.leingabe1);
@@ -477,14 +486,12 @@ public class spiel extends AppCompatActivity {
     //Speichert die aktuelle Dialog ID
     public boolean speichern(){
         try{
-            int x = sharedPreferences.getInt(SAVEKEY, -1);
-            if (x != -1){
-                editor.remove(SAVEKEY);
-                editor.putInt(SAVEKEY, eip);
-                editor.commit();
-            }else{
-                editor.putInt(SAVEKEY, eip);
-                editor.commit();
+            String[] args = {name,SDIALOG.getName()};
+            Cursor r = db.rawQuery("SELECT * FROM savepoints WHERE charakter=? AND abenteuer=?", args);
+            if(r.getCount() == 1){
+                db.execSQL("UPDATE savepoints SET eip=" + eip + " WHERE charakter='" + name + "' AND abenteuer='" + SDIALOG.getName() + "'");
+            }else if(r.getCount() == 0){
+                db.execSQL("INSERT INTO savepoints (abenteuer, charakter, eip) VALUES ('" + SDIALOG.getName() + "','" + name + "','" + eip + "')");
             }
             return true;
         }catch (Exception e){

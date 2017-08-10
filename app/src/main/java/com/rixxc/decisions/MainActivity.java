@@ -125,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
         //Initialisiere settings
         settings = getSharedPreferences("settings", MODE_PRIVATE);
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
         try{
             db.rawQuery("SELECT * FROM charakter",null).getCount();
         }catch(SQLiteException e){
             db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER)");
+        }
+        try{
+            db.rawQuery("SELECT * FROM savepoints", null).getCount();
+        }catch(SQLiteException e){
+            db.execSQL("CREATE TABLE savepoints (id INTEGER PRIMARY KEY AUTOINCREMENT, abenteuer TEXT, charakter TEXT, eip INTEGER)");
         }
 
 

@@ -71,7 +71,7 @@ public class neuerCharakter extends AppCompatActivity {
         setContentView(R.layout.activity_neuer_charakter);
         setTitle("Charaktere");
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
 
         obb = new File(getObbDir(), "Charaktere");
         punkte = (TextView) findViewById(R.id.LPunkte);

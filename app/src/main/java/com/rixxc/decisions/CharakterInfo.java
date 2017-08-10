@@ -40,7 +40,7 @@ public class CharakterInfo extends AppCompatActivity {
         mut = (TextView) findViewById(R.id.InfoMut);
         punkte = (TextView) findViewById(R.id.InfoPunkte);
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
 
         String EName = getIntent().getStringExtra("Charakter");
 

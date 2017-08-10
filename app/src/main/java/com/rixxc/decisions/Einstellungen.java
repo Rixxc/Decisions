@@ -35,7 +35,7 @@ public class Einstellungen extends AppCompatActivity {
 
         setTitle("Einstellungen");
 
-        db = openOrCreateDatabase("Charakter.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();
 
