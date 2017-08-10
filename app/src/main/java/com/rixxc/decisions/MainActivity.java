@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean neuesSpiel;
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     private ViewGroup mViewGroupe;
-    private Button starten,neu,history,detect;
+    private Button starten,neu,history,charaktere,einstellungen;
     private File obb;
     private File[] Files;
     private ProgressDialog dialog;
@@ -45,6 +48,60 @@ public class MainActivity extends AppCompatActivity {
     private int debug = 1;
     private Thread playMusic;
     private boolean pressedOnece;
+    private SQLiteDatabase db;
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(final View v) {
+            if(v.getId() == R.id.start){
+                starten(false);
+            }
+            if(v.getId() == R.id.neuesSpiel){
+                if(!pressedOnece){
+                    Toast.makeText(MainActivity.this, "Überschreibt alle Fortschritte zu diesem Abenteuer", Toast.LENGTH_LONG).show();
+                    neu.setText("erneut drücken");
+                    pressedOnece = true;
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pressedOnece = false;
+                            neu.setText("Neues Spiel");
+                        }
+                    }, 3000);
+                }else {
+                    starten(true);
+                }
+            }
+            if(v.getId() == R.id.settings){
+                Intent settings = new Intent(MainActivity.this, Einstellungen.class);
+                startActivity(settings);
+            }
+            if(v.getId() == R.id.history){
+            /*
+            final Rect viewRect = new Rect();
+            history.getGlobalVisibleRect(viewRect);
+
+            Transition explode = new Explode();
+            explode.setEpicenterCallback(new Transition.EpicenterCallback() {
+                @Override
+                public Rect onGetEpicenter(Transition transition) {
+                    return viewRect;
+                }
+            });
+            explode.setDuration(100);
+            TransitionManager.beginDelayedTransition(mViewGroupe, explode);
+
+            mViewGroupe.removeAllViews();
+            */
+            }
+            if(v.getId() == R.id.charaktere){
+                Intent charaktere = new Intent(MainActivity.this, Charaktere.class);
+                startActivity(charaktere);
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +110,33 @@ public class MainActivity extends AppCompatActivity {
         starten = (Button) findViewById(R.id.start);
         neu = (Button) findViewById(R.id.neuesSpiel);
         history = (Button) findViewById(R.id.history);
+        charaktere = (Button) findViewById(R.id.charaktere);
+        einstellungen = (Button) findViewById(R.id.settings);
         mViewGroupe = (ViewGroup) findViewById(R.id.activity_main);
         pressedOnece =false;
         neu.setText("Neues Spiel");
 
+        neu.setOnClickListener(onClickListener);
+        starten.setOnClickListener(onClickListener);
+        history.setOnClickListener(onClickListener);
+        charaktere.setOnClickListener(onClickListener);
+        einstellungen.setOnClickListener(onClickListener);
+
         //Initialisiere settings
         settings = getSharedPreferences("settings", MODE_PRIVATE);
+
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
+        try{
+            db.rawQuery("SELECT * FROM charakter",null).getCount();
+        }catch(SQLiteException e){
+            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER)");
+        }
+        try{
+            db.rawQuery("SELECT * FROM savepoints", null).getCount();
+        }catch(SQLiteException e){
+            db.execSQL("CREATE TABLE savepoints (id INTEGER PRIMARY KEY AUTOINCREMENT, abenteuer TEXT, charakter TEXT, eip INTEGER)");
+        }
+
 
         obb = new File(getObbDir(), "Abenteuer");
         if (!obb.exists()){
@@ -148,53 +226,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    public void OnClick(View v){
-        if(v.getId() == R.id.start){
-            starten(false);
-        }
-        if(v.getId() == R.id.neuesSpiel){
-            if(!pressedOnece){
-                Toast.makeText(this, "Überschreibt alle Fortschritte zu diesem Abenteuer", Toast.LENGTH_LONG).show();
-                neu.setText("erneut drücken");
-                pressedOnece = true;
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pressedOnece = false;
-                        neu.setText("Neues Spiel");
-                    }
-                }, 3000);
-            }else {
-                starten(true);
-            }
-        }
-        if(v.getId() == R.id.settings){
-            Intent settings = new Intent(MainActivity.this, Einstellungen.class);
-            startActivity(settings);
-        }
-        if(v.getId() == R.id.history){
-            /*
-            final Rect viewRect = new Rect();
-            history.getGlobalVisibleRect(viewRect);
-
-            Transition explode = new Explode();
-            explode.setEpicenterCallback(new Transition.EpicenterCallback() {
-                @Override
-                public Rect onGetEpicenter(Transition transition) {
-                    return viewRect;
-                }
-            });
-            explode.setDuration(100);
-            TransitionManager.beginDelayedTransition(mViewGroupe, explode);
-
-            mViewGroupe.removeAllViews();
-            */
-        }
-    }
     public void starten(boolean pNeuesSpiel){
         Dialog = null;
+        String[] column = {"name"};
+        String[] args = {settings.getString("Charakter", "Kein Charakter")};
+        Cursor result = db.query("Charakter",column,"name=?",args,null,null,null);
+        if(args[0] == "Kein Charakter" || result.getCount() == 0){
+            Toast.makeText(MainActivity.this, "Kein Charakter ausgewählt", Toast.LENGTH_LONG).show();
+            return;
+        }
         for (int i = 0; i < Files.length; i++){
             if (Files[i].getName().equals(settings.getString("Abenteuer", "Decision.adv"))){
                 Dialog = Files[i];
@@ -202,8 +242,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         neuesSpiel = pNeuesSpiel;
-        if(Dialog != null) {
+        if(Dialog != null){
             Intent starten = new Intent(MainActivity.this, spiel.class);
+            starten.putExtra("Charakter", settings.getString("Charakter",null));
             startActivity(starten);
         }else{
             Toast.makeText(MainActivity.this, "Kein Abneteuer ausgewählt", Toast.LENGTH_LONG).show();
@@ -293,5 +334,10 @@ public class MainActivity extends AppCompatActivity {
             dialog.setCancelable(true);
             //Toast.makeText(MainActivity.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

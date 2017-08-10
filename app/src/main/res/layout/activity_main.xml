@@ -11,52 +11,60 @@
     tools:context="com.rixxc.decisions.MainActivity">
 
     <Button
-        android:text="Einstellungen"
+        android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/settings"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/neuesSpiel"
-        android:layout_alignRight="@+id/history"
         android:layout_alignEnd="@+id/history"
         android:layout_alignLeft="@+id/history"
+        android:layout_alignRight="@+id/history"
         android:layout_alignStart="@+id/history"
-        android:onClick="OnClick" />
+        android:layout_below="@+id/charaktere"
+        android:layout_marginTop="15dp"
+        android:text="Einstellungen" />
 
     <Button
-        android:text="Spiel Laden"
+        android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/start"
-        android:onClick="OnClick"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/neuesSpiel"
         android:layout_alignEnd="@+id/neuesSpiel"
         android:layout_alignLeft="@+id/neuesSpiel"
-        android:layout_alignStart="@+id/neuesSpiel" />
+        android:layout_alignRight="@+id/neuesSpiel"
+        android:layout_alignStart="@+id/neuesSpiel"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="42dp"
+        android:text="Spiel Laden" />
 
     <Button
-        android:text="Neues Spiel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
         android:id="@+id/neuesSpiel"
-        android:onClick="OnClick"
-        android:layout_below="@+id/start"
-        android:layout_alignLeft="@+id/settings"
-        android:layout_alignStart="@+id/settings"
-        android:layout_alignRight="@+id/settings"
-        android:layout_alignEnd="@+id/settings" />
-
-    <Button
-        android:text="Deine Spiel-Geschichte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_alignEnd="@+id/settings"
+        android:layout_alignLeft="@+id/settings"
+        android:layout_alignRight="@+id/settings"
+        android:layout_alignStart="@+id/settings"
+        android:layout_below="@+id/start"
+        android:layout_marginTop="19dp"
+        android:text="Neues Spiel" />
+
+    <Button
         android:id="@+id/history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/settings"
         android:layout_centerHorizontal="true"
-        android:onClick="OnClick" />
+        android:layout_marginTop="18dp"
+        android:text="Deine Spiel-Geschichte" />
+
+    <Button
+        android:id="@+id/charaktere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/settings"
+        android:layout_alignLeft="@+id/settings"
+        android:layout_alignRight="@+id/settings"
+        android:layout_alignStart="@+id/settings"
+        android:layout_below="@+id/neuesSpiel"
+        android:layout_marginTop="15dp"
+        android:text="Charaktere" />
 
 </RelativeLayout>

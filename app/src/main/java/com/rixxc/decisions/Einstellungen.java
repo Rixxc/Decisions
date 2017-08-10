@@ -2,9 +2,13 @@ package com.rixxc.decisions;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -19,9 +23,10 @@ public class Einstellungen extends AppCompatActivity {
     private SharedPreferences.Editor editsettings;
     private Switch toggle;
     private Switch music;
-    private Spinner spinner;
+    private Spinner abenteuer,charakter;
     private File obb;
     private File[] Files;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class Einstellungen extends AppCompatActivity {
 
         setTitle("Einstellungen");
 
+        db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         editsettings = settings.edit();
 
@@ -98,17 +104,37 @@ public class Einstellungen extends AppCompatActivity {
 
         String[] FileNamen = new String[Files.length];
         for (int i = 0; i < Files.length; i++){
-            FileNamen[i] = Files[i].getName();
+            FileNamen[i] = Files[i].getName().substring(0, Files[i].getName().length() - 4);
+        }
+
+
+        String[] name = {"name"};
+        Cursor result = db.query("Charakter",name,null,null,null,null,null);
+        result.moveToFirst();
+        String[] CharakterNamen = new String[result.getCount()+1];
+        CharakterNamen[0] = "Kein Charakter";
+        for (int i = 0; i < result.getCount(); i++){
+            CharakterNamen[i+1] = result.getString(0);
+            result.moveToNext();
         }
 
         // Selection of the spinner
-        spinner = (Spinner) findViewById(R.id.Abenteuerwahl);
+        abenteuer = (Spinner) findViewById(R.id.Abenteuerwahl);
+        charakter = (Spinner) findViewById(R.id.Charakterauswahl);
 
 
         //Apply the Array to the Spinner
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, FileNamen);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(spinnerArrayAdapter);
+        abenteuer.setAdapter(spinnerArrayAdapter);
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, CharakterNamen);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        charakter.setAdapter(spinnerArrayAdapter2);
+
+        FileNamen = new String[Files.length];
+        for (int i = 0; i < Files.length; i++){
+            FileNamen[i] = Files[i].getName();
+        }
 
         int Auswahl = 0;
         for(int i = 0; i < FileNamen.length; i++){
@@ -117,7 +143,16 @@ public class Einstellungen extends AppCompatActivity {
             }
         }
 
-        spinner.setSelection(Auswahl);
+        abenteuer.setSelection(Auswahl);
+
+        int Auswahl2 = 0;
+        for(int i = 0; i < CharakterNamen.length; i++){
+            if(CharakterNamen[i].equals(settings.getString("Charakter", "Kein Charakter"))){
+                Auswahl2 = i;
+            }
+        }
+        Log.e("Auswahl", settings.getString("Charakter", "Kein Charakter"));
+        charakter.setSelection(Auswahl2);
 
         if(!mediaPlayer.isPlaying() && settings.getBoolean("Musik", true)){
             mediaPlayer.start();
@@ -125,10 +160,16 @@ public class Einstellungen extends AppCompatActivity {
     }
     @Override
     public void onPause() {
-        editsettings.putString("Abenteuer", spinner.getSelectedItem().toString());
+        editsettings.putString("Abenteuer", abenteuer.getSelectedItem().toString() + ".adv");
+        editsettings.putString("Charakter", charakter.getSelectedItem().toString());
         editsettings.commit();
         mediaPlayer.pause();
 
         super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }
