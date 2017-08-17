@@ -204,22 +204,34 @@ public class MainActivity extends AppCompatActivity {
     private void Abenteuereinbinden() {
         try {
             AssetManager am = getAssets();
-            File temp = new File(obb, "Decision.adv");
-            //WICHTIG: Datei muss mit UTF-8 ohne BOM kodiert werden, Notepad++
-            InputStream in = am.open("Decision.txt");
+            //File temp = new File(obb, "Decision.adv");
+            ////WICHTIG: Datei muss mit UTF-8 ohne BOM kodiert werden, Notepad++
+            //InputStream in = am.open("Decision.txt");
 
-            OutputStream out = new FileOutputStream(temp);
+            File temp = null;
+            InputStream in = null;
 
-            byte[] buffer = new byte[1024];
-            int len = in.read(buffer);
-            while (len != -1) {
-                out.write(buffer, 0, len);
-                len = in.read(buffer);
+            for(String x : am.list("")){
+                if(x.endsWith(".xml") && !x.startsWith("wifi") && !x.startsWith("permission")){
+                    String file = x.substring(0, x.length() - 4) + ".adv";
+                    temp = new File(obb, file);
+                    in = am.open(x);
+
+                    OutputStream out = new FileOutputStream(temp);
+
+                    byte[] buffer = new byte[1024];
+                    int len = in.read(buffer);
+                    while (len != -1) {
+                        out.write(buffer, 0, len);
+                        len = in.read(buffer);
+                    }
+
+                    in.close();
+                    out.flush();
+                    out.close();
+                }
             }
 
-            in.close();
-            out.flush();
-            out.close();
         }catch (Exception e){
             Toast.makeText(MainActivity.this, "Ein Fehler beim Abspielen des Soundtracks ist aufgetreten", Toast.LENGTH_LONG).show();
             e.printStackTrace();

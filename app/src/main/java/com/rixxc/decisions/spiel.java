@@ -19,10 +19,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class spiel extends AppCompatActivity {
 
@@ -43,6 +54,7 @@ public class spiel extends AppCompatActivity {
     private SharedPreferences keys;
     private SharedPreferences.Editor editkeys;
     private SQLiteDatabase db;
+    private ArrayList<Abschnitt> Abschnitte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,186 +314,81 @@ public class spiel extends AppCompatActivity {
     }
     //Hier wird geprüft, ob es sich bei der Abenteuerdate um eine valide Datei handelt
     public void spielInitalisieren(){
-        try
-        {
-            BufferedReader buffreader = new BufferedReader(new FileReader(SDIALOG));
-            String line = buffreader.readLine();
+        XmlPullParserFactory pullParserFactory;
+        try{
+            pullParserFactory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = pullParserFactory.newPullParser();
 
-            Log.d("Datei", line);
+            InputStream in_s = new FileInputStream(SDIALOG);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in_s, null);
 
-            //Prüfe, ob die Datei mit START anfängt
-            if (!line.equals("START")){
-                //Wenn nicht, dann gehe zum Menü
-                Toast.makeText(spiel.this, "Falsche Datei", Toast.LENGTH_LONG).show();
-                Intent back = new Intent(spiel.this, MainActivity.class);
-                finish();
-                startActivity(back);
-            }else{
-                //Gebe den ersten Dialog aus
-                //Toast.makeText(spiel.this, "Alles OK (Debug)", Toast.LENGTH_LONG).show();
-                gebeDialog(eip);
-            }
-        }
-        //Bei alles Fehlern: Zurück zum Menü und Toast ausgeben
-        catch (FileNotFoundException e){
-            Log.e("File1", e + "");
-            Toast.makeText(spiel.this, "Datei nicht gefunden", Toast.LENGTH_LONG).show();
-            Intent back = new Intent(spiel.this, MainActivity.class);
-            finish();
-            startActivity(back);
-        }
-        catch (Exception e) {
-            Log.e("File2", e + "");
-            Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-            Intent back = new Intent(spiel.this, MainActivity.class);
-            finish();
-            startActivity(back);
+            this.Abschnitte = parseXML(parser);
+
+            gebeDialog(eip);
+
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
     //Gebe den Dialog mit der entsprechenden ID aus
     public void gebeDialog(int pEip){
-        try
-        {
-            BufferedReader br = new BufferedReader(new FileReader(SDIALOG));
-            String text = br.readLine();
+        Abschnitt currentAbschnitt = null;
+        for(Abschnitt a : Abschnitte){
+            if(a.id == pEip){
+                currentAbschnitt = a;
+                break;
+            }
+        }
+        if(currentAbschnitt == null){
+            Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG);
+            Intent intent = new Intent(spiel.this, MainActivity.class);
+            finish();
+            startActivity(intent);
+        }
 
-            //Gehe soweit, bis die richtige ID gefunden ist
-            while(!text.startsWith(pEip + ":")){
-                text = br.readLine();
-            }
+        DialogAusgabe.setText(currentAbschnitt.Text);
 
-            //Trenne den Dialog bei einem Doppelpunkt, um die ID am Anfang wegzubekommen
-            String[] Ausgabe = text.split(":");
-            if (!(text.length() > 2)){
-                //Wenn Länge des Arrays == 2, dann gebe den Dialog aus (Ausgabe[1]). Vorher Abfrage, ob Key requested wird
-                if(Ausgabe[1].startsWith("REQUEST")){
-                    DialogAusgabe.setText("");
-                    int next;
-                    if((next = checkRequest(Ausgabe[1].substring(9))) != -1){
-                        gebeDialog(next);
-                        return;
-                    }else{
-                        Ausgabe[1] = null;
-                    }
-                }
-                if(Ausgabe[1] != null){
-                    DialogAusgabe.setText(Ausgabe[1] + "\n");
-                }
-            }else{
-                DialogAusgabe.setText("");
-                if(Ausgabe[1].startsWith("REQUEST")){
-                    int next;
-                    if((next = checkRequest(Ausgabe[1].substring(8))) != -1){
-                        gebeDialog(next);
-                        return;
-                    }else{
-                        Ausgabe[1] = null;
-                    }
-                }
-                if(Ausgabe[1] != null) {
-                    //Wenn mehr, dann gebe alle Fragmente hintereinander aus
-                    DialogAusgabe.setText(Ausgabe[1]);
-                    for (int i = 2; i < Ausgabe.length; i++) {
-                        DialogAusgabe.append(":");
-                        DialogAusgabe.append(Ausgabe[i]);
-                    }
-                    DialogAusgabe.append("\n");
-                }
-            }
-            //Titel der Knöpfe setzen und die ID für die weiteren Dialoge setzen
-            text = br.readLine();
-            while(!text.contains("BUTTON") && !text.contains("SAVE")){
-                DialogAusgabe.append(text + "\n");
-                text = br.readLine();
-            }
-            if(text.startsWith("SAVE")){
-                text = text.substring(5);
-                editkeys.putBoolean(text, true);
-                editkeys.commit();
-                text = br.readLine();
-            }
-            //Prüfen, ob ein Ende erreicht wurde
-            text = text.substring(7);
-            if(text.equals("ENDE")){
-                weiter1 = -1;
+        switch(currentAbschnitt.Buttons.length){
+            case 1:
+                weiter1 = currentAbschnitt.weiter[0];
                 weiter2 = -1;
                 weiter3 = -1;
-                eingabe1.setVisibility(Button.INVISIBLE);
-                eingabe3.setVisibility(Button.INVISIBLE);
-                eingabe2.setText("ENDE");
-                return;
-            }
-            if(text.startsWith("WEITER")){
-                eingabe1.setVisibility(Button.INVISIBLE);
-                eingabe3.setVisibility(Button.INVISIBLE);
-                eingabe2.setVisibility(Button.VISIBLE);
-                eingabe2.setText("Weiter");
-                text = text.substring(7);
-                weiter1 = -1;
-                weiter3 = -1;
-                try {
-                    weiter2 = Integer.parseInt(text);
-                }catch(Exception e) {
-                    Log.e("IntPars", e + "");
-                    Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-                    Intent back = new Intent(spiel.this, MainActivity.class);
-                    startActivity(back);
-                }
-                return;
-            }
-            String[] Buttons = text.split(",");
-            eingabe1.setVisibility(Button.VISIBLE);
-            eingabe3.setVisibility(Button.VISIBLE);
-            text = br.readLine();
-            text = text.substring(9);
-            String[] SWeiter = text.split(",");
-            if (Buttons.length == 2){
-                eingabe1.setText(Buttons[0]);
+                eingabe1.setText(currentAbschnitt.Buttons[0]);
+                eingabe1.setVisibility(Button.VISIBLE);
                 eingabe2.setVisibility(Button.INVISIBLE);
-                eingabe3.setText(Buttons[1]);
-                weiter2 = -1;
-                try{
-                    weiter1 = Integer.parseInt(SWeiter[0]);
-                    weiter3 = Integer.parseInt(SWeiter[1]);
-                }catch (Exception e){
-                    Log.e("IntPars", e + "");
-                    Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-                    Intent back = new Intent(spiel.this, MainActivity.class);
-                    startActivity(back);
-                }
-            }
-            if (Buttons.length == 3){
-                eingabe1.setText(Buttons[0]);
-                eingabe2.setText(Buttons[1]);
-                eingabe3.setText(Buttons[2]);
-                try{
-                    weiter1 = Integer.parseInt(SWeiter[0]);
-                    weiter2 = Integer.parseInt(SWeiter[1]);
-                    weiter3 = Integer.parseInt(SWeiter[2]);
-                }catch (Exception e){
-                    Log.e("IntPars", e + "");
-                    Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-                    Intent back = new Intent(spiel.this, MainActivity.class);
-                    finish();
-                    startActivity(back);
-                }
-            }
+                eingabe3.setVisibility(Button.INVISIBLE);
+                break;
+            case 2:
+                weiter1 = currentAbschnitt.weiter[0];
+                weiter2 = currentAbschnitt.weiter[1];
+                weiter3 = -1;
+                eingabe1.setText(currentAbschnitt.Buttons[0]);
+                eingabe2.setText(currentAbschnitt.Buttons[1]);
+                eingabe1.setVisibility(Button.VISIBLE);
+                eingabe2.setVisibility(Button.VISIBLE);
+                eingabe3.setVisibility(Button.INVISIBLE);
+                break;
+            case 3:
+                weiter1 = currentAbschnitt.weiter[0];
+                weiter2 = currentAbschnitt.weiter[1];
+                weiter3 = currentAbschnitt.weiter[2];
+                eingabe1.setText(currentAbschnitt.Buttons[0]);
+                eingabe2.setText(currentAbschnitt.Buttons[1]);
+                eingabe3.setText(currentAbschnitt.Buttons[2]);
+                eingabe1.setVisibility(Button.VISIBLE);
+                eingabe2.setVisibility(Button.VISIBLE);
+                eingabe3.setVisibility(Button.VISIBLE);
+                break;
+            default:
+                Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(spiel.this, MainActivity.class);
+                finish();
+                startActivity(intent);
+                break;
         }
-        catch (FileNotFoundException e){
-            Log.e("File3", e + "");
-            Toast.makeText(spiel.this, "Datei nicht gefunden", Toast.LENGTH_LONG).show();
-            Intent back = new Intent(spiel.this, MainActivity.class);
-            finish();
-            startActivity(back);
-        }
-        catch (Exception e)
-        {
-            Log.e("File4", e + "");
-            Toast.makeText(spiel.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
-            Intent back = new Intent(spiel.this, MainActivity.class);
-            finish();
-            startActivity(back);
-        }
+
+
     }
     //Speichert die aktuelle Dialog ID
     public boolean speichern(){
@@ -529,4 +436,52 @@ public class spiel extends AppCompatActivity {
         db.close();
         super.onDestroy();
     }
+
+    private ArrayList<Abschnitt> parseXML(XmlPullParser parser) throws XmlPullParserException,IOException {
+        ArrayList<Abschnitt> Abschnitte = null;
+        int eventType = parser.getEventType();
+        Abschnitt currentAbschnitt = null;
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            String name = null;
+            switch (eventType) {
+                case XmlPullParser.START_DOCUMENT:
+                    Abschnitte = new ArrayList();
+                    break;
+                case XmlPullParser.START_TAG:
+                    name = parser.getName();
+                    if (name.equalsIgnoreCase("Abschnitt")) {
+                        currentAbschnitt = new Abschnitt();
+                    } else if (currentAbschnitt != null) {
+                        if (name.equalsIgnoreCase("ID")) {
+                            currentAbschnitt.id = Integer.parseInt(parser.nextText());
+                        } else if (name.equalsIgnoreCase("Text")) {
+                            currentAbschnitt.Text = parser.nextText();
+                        } else if (name.equalsIgnoreCase("Buttons")) {
+                            currentAbschnitt.Buttons = parser.nextText().split(";");
+                        } else if (name.equalsIgnoreCase("IDS")) {
+                            int[] ids;
+                            String result = parser.nextText();
+                            String[] results = result.split(";");
+                            ids = new int[results.length];
+                            for (int i = 0; i < results.length; i++) {
+                                ids[i] = Integer.parseInt(results[i]);
+                            }
+                            currentAbschnitt.weiter = ids;
+                        }
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    name = parser.getName();
+                    if (name.equalsIgnoreCase("Abschnitt") && currentAbschnitt != null) {
+                        Abschnitte.add(currentAbschnitt);
+                    } else if (name.equalsIgnoreCase("Decisions")){
+                        return Abschnitte;
+                    }
+            }
+            eventType = parser.next();
+        }
+        return Abschnitte;
+    }
+
 }
