@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         try{
             db.rawQuery("SELECT * FROM charakter",null).getCount();
         }catch(SQLiteException e){
-            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER)");
+            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER, avatar Text)");
         }
         try{
             db.rawQuery("SELECT * FROM savepoints", null).getCount();

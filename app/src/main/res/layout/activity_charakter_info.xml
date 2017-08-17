@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
@@ -19,64 +20,74 @@
         android:id="@+id/InfoStärke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/InfoName"
-        android:layout_alignRight="@+id/InfoName"
-        android:layout_below="@+id/InfoName"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="13dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/InfoName"
+        android:layout_alignLeft="@+id/InfoName"
+        android:layout_alignStart="@+id/InfoName" />
 
     <TextView
         android:id="@+id/InfoAusdauer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/InfoStärke"
-        android:layout_alignStart="@+id/InfoStärke"
-        android:layout_below="@+id/InfoStärke"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/InfoStärke"
+        android:layout_alignLeft="@+id/InfoStärke"
+        android:layout_alignStart="@+id/InfoStärke" />
 
     <TextView
         android:id="@+id/InfoIntelligenz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/InfoAusdauer"
-        android:layout_alignRight="@+id/InfoAusdauer"
-        android:layout_below="@+id/InfoAusdauer"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/InfoAusdauer"
+        android:layout_alignLeft="@+id/InfoAusdauer"
+        android:layout_alignStart="@+id/InfoAusdauer" />
 
     <TextView
         android:id="@+id/InfoGeschicklichkeit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/InfoIntelligenz"
         android:layout_alignLeft="@+id/InfoIntelligenz"
         android:layout_alignStart="@+id/InfoIntelligenz"
-        android:layout_centerVertical="true"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/InfoMut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/InfoGeschicklichkeit"
-        android:layout_alignRight="@+id/InfoGeschicklichkeit"
-        android:layout_below="@+id/InfoGeschicklichkeit"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="22dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/InfoGeschicklichkeit"
+        android:layout_alignLeft="@+id/InfoGeschicklichkeit"
+        android:layout_alignStart="@+id/InfoGeschicklichkeit" />
 
     <TextView
         android:id="@+id/InfoPunkte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/InfoMut"
-        android:layout_alignStart="@+id/InfoMut"
-        android:layout_below="@+id/InfoMut"
-        android:layout_marginTop="33dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/InfoMut"
+        android:layout_alignStart="@+id/InfoMut" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/InfoPunkte"
+        android:layout_alignStart="@+id/InfoPunkte"
+        android:layout_below="@+id/InfoPunkte"
+        android:layout_marginTop="21dp"
+        app:srcCompat="@android:color/background_dark" />
 </RelativeLayout>

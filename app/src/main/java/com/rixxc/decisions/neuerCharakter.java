@@ -106,6 +106,8 @@ public class neuerCharakter extends AppCompatActivity {
             public void onClick(View v) {
                 switch(v.getId()){
                     case R.id.createCharakter:
+                        Intent intent = new Intent(neuerCharakter.this, CharakterPicture.class);
+
                         String[] args = {name.getText().toString()};
                         if(db.rawQuery("SELECT * FROM charakter WHERE name=?",args).getCount() == 0){
                             try{
@@ -119,18 +121,22 @@ public class neuerCharakter extends AppCompatActivity {
                                 if((istärke+iausdauer+imut+iintelligenz+igeschicklichkeit) > 65){
                                     throw new Exception("Es wurden zu viele Punkte verteilt");
                                 }
-                                if(name.getText().toString() == "" || name.getText().toString() == null || name.getText().toString().contains(" ")){
+                                if(name.getText().toString().equalsIgnoreCase("") || name.getText().toString() == null || name.getText().toString().contains(" ")){
                                     throw new Exception("Ungültiger Name");
                                 }
                                 if(istärke < 10 || imut < 10 || iausdauer < 10 || iintelligenz < 10 || igeschicklichkeit < 10){
                                     throw new Exception("Kein Wert darf unter 10 liegen");
                                 }
 
-                                db.execSQL("INSERT INTO charakter(name,stärke,ausdauer,intelligenz,geschicklichkeit,mut,punkte) VALUES ('" + name.getText().toString() + "','" + istärke + "','" + iausdauer + "','" + iintelligenz + "','" + igeschicklichkeit + "','" + imut + "','" + (15 - ((istärke+iausdauer+imut+iintelligenz+igeschicklichkeit) - 50)) + "')");
+                                intent.putExtra("name", name.getText().toString());
+                                intent.putExtra("stärke", istärke);
+                                intent.putExtra("ausdauer", iausdauer);
+                                intent.putExtra("mut", imut);
+                                intent.putExtra("intelligenz", iintelligenz);
+                                intent.putExtra("geschicklichkeit", igeschicklichkeit);
                                 db.close();
-
-                                Intent intent = new Intent(neuerCharakter.this, Charaktere.class);
                                 startActivity(intent);
+
                             }catch (Exception e) {
                                 if(e.getMessage().equals("Es wurden zu viele Punkte verteilt") || e.getMessage().equals("Ungültiger Name") || e.getMessage().equals("Kein Wert darf unter 10 liegen")){
                                     Toast.makeText(neuerCharakter.this, e.getMessage(), Toast.LENGTH_LONG).show();

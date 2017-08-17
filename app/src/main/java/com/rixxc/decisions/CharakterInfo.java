@@ -3,12 +3,14 @@ package com.rixxc.decisions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +19,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 
 public class CharakterInfo extends AppCompatActivity {
 
     private String charakterName;
     private TextView name,stärke,ausdauer,intelligenz,geschicklichkeit,mut,punkte;
+    private ImageView avatar;
     private SQLiteDatabase db;
     private int id;
 
@@ -39,12 +43,13 @@ public class CharakterInfo extends AppCompatActivity {
         geschicklichkeit = (TextView) findViewById(R.id.InfoGeschicklichkeit);
         mut = (TextView) findViewById(R.id.InfoMut);
         punkte = (TextView) findViewById(R.id.InfoPunkte);
+        avatar = (ImageView) findViewById(R.id.avatar);
 
         db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
 
         String EName = getIntent().getStringExtra("Charakter");
 
-        String[] column = {"stärke","ausdauer","intelligenz","geschicklichkeit","mut","punkte","id"};
+        String[] column = {"stärke","ausdauer","intelligenz","geschicklichkeit","mut","punkte","id","avatar"};
         String[] args = {EName};
         Cursor result = db.query("Charakter", column,"name=?",args,null,null,null);
         result.moveToFirst();
@@ -57,6 +62,17 @@ public class CharakterInfo extends AppCompatActivity {
         mut.setText("Mut: " + result.getInt(4));
         punkte.setText("Verbleibende Punkte: " + result.getInt(5));
         id = result.getInt(6);
+        try{
+            InputStream in = getAssets().open("portraits/" + result.getString(7));
+
+            Drawable d = Drawable.createFromStream(in, null);
+
+            avatar.setImageDrawable(d);
+        }catch (Exception e){
+            Toast.makeText(CharakterInfo.this, "Ein Fehler ist aufgetreten", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(CharakterInfo.this, Charaktere.class);
+            startActivity(intent);
+        }
 
     }
 
