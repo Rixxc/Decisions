@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Decisions>
+  <Setting>
+  </Setting>
+  <Geschlecht>
+  </Geschlecht>
+  <Abschnitt>
+    <ID>1</ID>
+    <Attributvorraussetzungen>0,0,0,0,0</Attributvorraussetzungen>
+    <Itemvorraussetzungen></Itemvorraussetzungen>
+    <Text>Text1</Text>
+    <Buttons>gehen;laufen</Buttons>
+    <Weiter>
+      <IDS>2;3;0</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;0,0,0,0,0</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>2</ID>
+    <Attributvorraussetzungen>0,0,0,0,0</Attributvorraussetzungen>
+    <Itemvorraussetzungen></Itemvorraussetzungen>
+    <Text>Text2</Text>
+    <Buttons>irgendwas</Buttons>
+    <Weiter>
+      <IDS>4;0;0</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>3</ID>
+    <Attributvorraussetzungen>0,0,0,0,0</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Text>
+    </Text>
+    <Buttons>
+    </Buttons>
+    <Weiter>
+      <IDS>0;0;0</IDS>
+      <Vorraussetzungen>
+        <Attribute>
+        </Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>4</ID>
+    <Attributvorraussetzungen>0,0,0,0,0</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Text>
+    </Text>
+    <Buttons></Buttons>
+    <Weiter>
+      <IDS>0;0;0</IDS>
+      <Vorraussetzungen>
+        <Attribute>
+        </Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+</Decisions>

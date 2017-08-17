@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Decisions>
+  <Setting>
+  </Setting>
+  <Geschlecht>
+  </Geschlecht>
+  <Abschnitt>
+    <ID>1</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Anfang</Titel>
+    <Text>
+    </Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Prolog;</Buttons>
+    <Weiter>
+      <IDS>2;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>2</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Prolog</Titel>
+    <Text>Der reisende Erhardt lebte einst mit seiner Frau Clara und seinem Kind Token, in einem Dorf namens Falkingen. Die Familie lebte glücklich und sie stritten selten, beinahe nie untereinander oder miteinander. Jedoch gibt es einen Grund weswegen Erhardt nun ein Reisender ist. Seine Frau Clara ist unglücklicher Weise an einer unheilbaren Krankheit gestorben. Er und sein/e Sohn/Tochter Token konnten es für das erste nicht ertragen in dem Dorf weiter zu leben ohne an den Tod ihrer Clara zu denken. Es ist nun über ein Jahr her seit ihrem Tod und Erhardt und Token reisen weiterhin um die Welt. Es hat den Anschein das Erhardt über den Tod seiner Frau hinweg gekommen ist.</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Weiter;</Buttons>
+    <Weiter>
+      <IDS>3;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>3</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Weiter</Titel>
+    <Text>Token jedoch hatte den Tod seiner/ihrer Mutter jedoch nicht ganz Überwinden können. Token war stehts ein liebevolles Kind, was sich sofort mit jedem verstanden hat und nie Dummheiten angestellt hatte. Jeder der ihn/sie sah spürte eine positive Aura. Man könnte sagen, dass seine Freude sich auf die anderen Übertrug.</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Tokens Vergangenheit;</Buttons>
+    <Weiter>
+      <IDS>4;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>4</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Tokens Vergangenheit</Titel>
+    <Text>Man muss auch sagen, dass der Grund seiner Trauer nicht nur an ihrem Tod lag, sondern viel mehr an den Ereignissen die danach geschahen. Erhardt war so sehr von Claras Tod getroffen, dass er alles, was ihn an seine Frau erinnerte, von seinem Haus entfernte. Dazu gehörte auch Token. Token flehte und bettelte seinen Vater an zurück ins Haus kommen zu dürfen, aber dieser ignorierte ihn/sie und ließ Token draußen. Dies ging einige Wochen so weiter. Glücklicherweise erhielt Token Nahrung und eine Unterkunft bei den anderen Familien im Dorf. Sie sagten ihm alle dasselbe. "Dein Vater ist im Moment nur sehr von dem Tod deiner Mutter getroffen Token". Token hatte in diesem Moment auch die Hoffnung und den Wunsch, dass es sich bessern würde. Er/Sie hatte bereits seine/ihre Mutter verloren, er/sie konnte nicht auch noch seinen/ihren Vater verlieren. Token ging jeden Tag zu dem Haus seines Vaters und wollte nur wieder nachhause gehen und mit ihm trauern, jedoch wurde die Tür nie geöffnet, bis zu jenem schicksalhaften Tag an dem ihre Reise beginnen sollte. Erhardt suchte Token bei der Familie auf bei der er/sie sich momentan aufhielt. Er entschuldigte sich bei Token und versuchte ihm/ihr alles zu erklären. Er wollte einen neuanfang starten indem er auf Reise geht, jedoch wollte er diese nicht ohne Token antreten und fragte ihn, ob er/sie mitkommen möchte. Token platzte äußerlich vor Freude und nahm das Angebot an. Jedoch spürte Token, dass etwas anders an Erhardt war. Token wusste nicht wieso, jedoch hatte er/sie bereits damals das Gefühl gehabt, dass dieser ihm/ihr etwas verheimlicht.</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Gegenwart;</Buttons>
+    <Weiter>
+      <IDS>5;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>5</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Gegenwart</Titel>
+    <Text>Seit damals ist es nun über ein Jahr, genauer gesagt 18 Monate. In dieser Zeit besuchten Erhardt und Token viele Dörfer und Städte. Sie kauften stehts nur das nötigste ein, heißt Proviant um wieder weiterreisen zu können. "Vater, warum können wir nicht etwas länger hier bleiben? Ich finde es hier ziemlich schön. Außerdem wäre es schön mal etwas länger in einem Dorf zu bleiben als nur zwei bis drei Nächte."</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Erdhardt;</Buttons>
+    <Weiter>
+      <IDS>6;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>6</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Erdhardt</Titel>
+    <Text>"Mein liebes Kind, ich weiß das Leben was wir im Moment führen ist anstrengend, aber ich verspreche dir, dass es sich lohnen wird. Aber ich verspreche dir dort wohin wir jetzt hingehen ist es um einiges schöner und besser. Wenn wir da sind müssen wir nicht mehr durch die Dörfer Reisen." Token grübelte und fragte: "Aber warum müssen wir denn soweit weg? Warum können wir nicht einfach hierbleiben? Ich dachte wir kehren irgendwann auch in unser Dorf zurück".</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Gespräch;</Buttons>
+    <Weiter>
+      <IDS>7;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>7</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Gespräch</Titel>
+    <Text>"Alles zu seiner Zeit. Ich verspreche dir, dass ich dir alles erklären werde. Es dauert nicht mehr lange. Genauer gesagt ist dies sogar das letzte Dorf danach sind wir da! Wir gehen bei Sonnenaufgang auf ein Schiff, dass uns dahin fährt". "Hm... versprichst du mir, dass du mir alle meine Fragen beantworten wirst wenn wir da sind? Ich finde nämlich, dass du dich seit einer Weile seltsam benimmst".
+Erhardt lächelte "Oh! Das ist mir gar nicht aufgefallen. Seit wann benehme ich mich denn eigenartig?". "Seit wir unsere Reise begonnen haben. Jetzt Versprich es mir sonst lass ich dich nicht schlafen!".</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Versprechen;</Buttons>
+    <Weiter>
+      <IDS>8;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>8</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Versprechen</Titel>
+    <Text>Erhardt war teilweise schockiert als auch verwundert, dass es Token aufgefallen ist. Immerhin gab er sich größte Mühe genau das selbe Verhalten vor zu weisen wie vor Claras Tod. "Ich gebe dir mein Wort mein Kind, sobald wir da sind werde ich dir alles erzählen! Mir tut alles aufrichtig leid, jedoch hatte jede Handlung seit dem Tod deiner Mutter einen Sinn oder viel mehr einen Zweck". "Auch, dass du mich ausgesperrt hast? Mich aus dem Haus geworfen hast? Mich nach dem Tod von Mama alleine gelassen hast?" Tokens Augen füllten sich mit Tränen. Erhardt atmete tief ein und aus. Er kniete sich hin, so dass er ungefähr so groß war wie Token. Er nahm sein Amulett ab, dass er stehts mit sich trug und hing es an Token. "Dieses Amulett gehörte deiner Mutter. Ich habe es für dich aufbewahrt und habe auf den richtigen Moment gewartet um es dir zu geben. Es hat ihr viel bedeutet, also bitte ich dich nun darauf aufzupassen und es zu hüten. Schaffst du das?". Token nickte, während ihm die Tränen die Wangen herunter gingen. Erhardt küsste Token an die Stirn und sagte: "Es wird sich alles klären wenn es soweit ist. Also lege dich hin und schlafe etwas."</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Morgen;</Buttons>
+    <Weiter>
+      <IDS>9;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>9</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Morgen</Titel>
+    <Text>Die Sonne geht auf. Erhardt und Token machen sich auf dem Weg zum Hafen. Sie stellen sich an einer Reihe an und warten bis sie dran sind. Während Token sich freut, ist fängt Erhardt an nervös zu werden. Plötzlich hört man eine Explosion. Die in der Nähe gelegenen Gebäude fängt Feuer. Es brecht Chaos aus. Die Menschenmenge tobt und fängt an vor Angst zu schreien. In diesem Tumult sieht Erhardt wie eine Gruppe Soldaten in ihre Richtung kommt. Geführt werden sie von einem Mann mit langem weißem Haar, schneeweißer Haut und blutrote Augen. Seine Ohren sind spitz und er strahlt eine Aura aus, die mehr als düster ist. Er trägt eine schwarz glänzende Rüstung. Erhardt läuft ein schauer über den Rücken. Dann bemerkte er, dass auch Token ihn entdeckte und vor Angst zitterte.</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>beruhigen;</Buttons>
+    <Weiter>
+      <IDS>10;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>10</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>beruhigen</Titel>
+    <Text>Erhardt kniet sich wieder hin und schaut in Tokens verängstigte Augen. "Mach dir keine Sorgen mein Kind. Geh auf das Schiff und fahre am besten vor ich komme später nach. Und vergiss nicht was du mir versprochen hast". "Du aber auch nicht". Erhardt lächelt und schickt sein Token los. "Ich Liebe dich mein Kind. Steige bei dem Hafen Solarius aus und frage nach einem Mann namens Arthur, er wird dir helfen, er ist dein Großvater. Nun geh los und dreh dich nicht um!". Während Token so schnell er kann zum Schiff rennt, geht Erhardt in die entgegengesetzte Richtung und stellte sich der Gruppe von Soldaten und ihrem Anführer. </Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Token;</Buttons>
+    <Weiter>
+      <IDS>11;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>11</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Token</Titel>
+    <Text>Kaum war Token auf dem Schiff fährt dieses auch schon los mit den Passagieren die es geschafft haben. Im Hintergrund hört man immernoch Explosionen und immer leiser werdende schreie.</Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>Hinüberschauen;</Buttons>
+    <Weiter>
+      <IDS>12;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>0,0,0,0,0;</Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+  <Abschnitt>
+    <ID>12</ID>
+    <Attributvorraussetzungen>0,0,0,0,0,</Attributvorraussetzungen>
+    <Itemvorraussetzungen>
+    </Itemvorraussetzungen>
+    <Titel>Hinüberschauen</Titel>
+    <Text>Token sorgt sich um seinen Vater und versucht zum Heck des Schiffes zu gelangen in der Hoffnung, dass man etwas sehen könnte. Er/Sie blickte hinüber und sucht seinen/ihren Vater. Es dauert nicht lange bis Token ihn sieht. Erhardt kniet vor dem weiß haarigen Mann. Dieser hält ein schwarzes Schwert in der Hand. Erhardt Blickt nocheinmal auf das Schiff. Er lächelt bis der weiß haarige ihm das Schwert in die Brust rammt. Für Token fühlt sich dieser Moment wie eine Ewigkeit an. Token schreit auf und kann seine/ihre Tränen nicht zurückhalten. Nun kreuzten sich die Blicke des weiß Haarigen Mannes und Tokens. Die Soldaten ziehen sich zurück, der Hafen brennt und das Schiff fährt seinen Weg. </Text>
+    <Itembelohnungen>
+    </Itembelohnungen>
+    <Buttons>
+    </Buttons>
+    <Weiter>
+      <IDS>0;0;0;</IDS>
+      <Vorraussetzungen>
+        <Attribute>
+        </Attribute>
+        <Items> </Items>
+      </Vorraussetzungen>
+    </Weiter>
+  </Abschnitt>
+</Decisions>
