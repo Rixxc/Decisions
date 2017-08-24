@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -127,16 +128,16 @@ public class MainActivity extends AppCompatActivity {
 
         db = openOrCreateDatabase("Decisions.db", MODE_PRIVATE, null);
         try{
-            db.rawQuery("SELECT * FROM charakter",null).getCount();
-        }catch(SQLiteException e){
-            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER, avatar Text)");
-        }
-        try{
-            db.rawQuery("SELECT * FROM savepoints", null).getCount();
-        }catch(SQLiteException e){
-            db.execSQL("CREATE TABLE savepoints (id INTEGER PRIMARY KEY AUTOINCREMENT, abenteuer TEXT, charakter TEXT, eip INTEGER)");
+            db.rawQuery("SELECT * FROM version", null).getCount();
+        }catch (SQLiteException e){
+            db.execSQL("CREATE TABLE version (version INTEGER)");
+            db.execSQL("INSERT INTO version (version) VALUES ('0')");
         }
 
+        Cursor r = db.rawQuery("SELECT version FROM version", null);
+        r.moveToLast();
+        int version = r.getInt(0);
+        updateDB(version);
 
         obb = new File(getObbDir(), "Abenteuer");
         if (!obb.exists()){
@@ -351,5 +352,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         db.close();
         super.onDestroy();
+    }
+
+    public void updateDB(int Version){
+        if(Version < 1){
+            db.execSQL("CREATE TABLE charakter (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, stärke INTEGER, ausdauer INTEGER, intelligenz INTEGER, geschicklichkeit INTEGER, mut INTEGER, punkte INTEGER, avatar Text)");
+            db.execSQL("CREATE TABLE savepoints (id INTEGER PRIMARY KEY AUTOINCREMENT, abenteuer TEXT, charakter TEXT, eip INTEGER)");
+            db.execSQL("INSERT INTO version (version) VALUES ('1')");
+            Version++;
+        }
     }
 }
