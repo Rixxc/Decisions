@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/spiel_portrait"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.rixxc.decisions.spiel">
 
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="344dp"
+        android:id="@+id/Dialog"
+        android:layout_height="480dp"
+        tools:layout_conversion_absoluteX="16dp"
+        tools:layout_conversion_absoluteY="16dp"
+        tools:layout_conversion_absoluteWidth="328dp"
+        tools:layout_conversion_absoluteHeight="480dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="8dp" />
+
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:orientation="horizontal"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/eingaben"
+        tools:layout_conversion_absoluteX="16dp"
+        tools:layout_conversion_absoluteY="496dp"
+        tools:layout_conversion_absoluteWidth="328dp"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_editor_absoluteY="496dp"
+        tools:layout_editor_absoluteX="8dp">
 
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:id="@+id/Dialog"
-            android:layout_height="480dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/eingaben">
+            android:id="@+id/eingabe1"
+            android:layout_weight="1"
+            android:onClick="OnClick" />
 
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/eingabe1"
-                android:layout_weight="1"
-                android:onClick="OnClick" />
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eingabe2"
+            android:layout_weight="1"
+            android:onClick="OnClick" />
 
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/eingabe2"
-                android:layout_weight="1"
-                android:onClick="OnClick" />
-
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/eingabe3"
-                android:layout_weight="1"
-                android:onClick="OnClick" />
-
-        </LinearLayout>
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eingabe3"
+            android:layout_weight="1"
+            android:onClick="OnClick" />
 
     </LinearLayout>
 
-</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

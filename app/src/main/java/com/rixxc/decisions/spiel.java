@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -46,7 +47,7 @@ public class spiel extends AppCompatActivity {
     private TextView DialogAusgabe;
     private Button eingabe1,eingabe2,eingabe3;
     private int weiter1,weiter2,weiter3;
-    private RelativeLayout rl;
+    private ConstraintLayout rl;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private SharedPreferences SETTINGS;
@@ -116,7 +117,7 @@ public class spiel extends AppCompatActivity {
             setContentView(R.layout.activity_spiel_portrait);
 
             //Werte werden initialisiert
-            rl = (RelativeLayout) findViewById(R.id.spiel_portrait);
+            rl = (ConstraintLayout) findViewById(R.id.spiel_portrait);
             DialogAusgabe = (TextView) findViewById(R.id.Dialog);
             eingabe1 = (Button) findViewById(R.id.eingabe1);
             eingabe2 = (Button) findViewById(R.id.eingabe2);
@@ -183,7 +184,7 @@ public class spiel extends AppCompatActivity {
 
             //Werte werden initialisiert
             DialogAusgabe = (TextView) findViewById(R.id.lDialog);
-            rl = (RelativeLayout) findViewById(R.id.spiel_landscape);
+            rl = (ConstraintLayout) findViewById(R.id.spiel_landscape);
             eingabe1 = (Button) findViewById(R.id.leingabe1);
             eingabe2 = (Button) findViewById(R.id.leingabe2);
             eingabe3 = (Button) findViewById(R.id.leingabe3);
