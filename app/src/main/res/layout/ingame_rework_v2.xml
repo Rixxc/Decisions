@@ -42,14 +42,17 @@
         app:srcCompat="@drawable/characterportrait_5" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="48dp"
+        android:id="@+id/Actbtn"
+        android:layout_width="0dp"
+        android:layout_height="92dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/round_button"
         android:contentDescription="Reaction"
         android:elevation="5dp"
+        android:scaleType="fitStart"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/Owncharacter"
         app:layout_constraintRight_toLeftOf="@+id/Contactcharacter"
         app:layout_constraintTop_toTopOf="parent"
