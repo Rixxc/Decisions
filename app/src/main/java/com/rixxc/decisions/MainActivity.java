@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
         }
         neuesSpiel = pNeuesSpiel;
         if(Dialog != null){
-            Intent starten = new Intent(MainActivity.this, spiel.class);
+            Intent starten = new Intent(MainActivity.this, ingame_rework_v2.class);
             starten.putExtra("Charakter", settings.getString("Charakter",null));
             startActivity(starten);
         }else{
